@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Top 100 Coins by Market Capitalization",
+    "table": {
+      "rank": "#",
+      "name": "Coin",
+      "market_cap": "Market cap",
+      "price": "Price",
+      "volume": "Volume",
+      "circulating_supply": "Circulating supply",
+      "change_24h": "Change % (24h)",
+      "graph_7d": "Graph (7d)"
+    }
+  }
+}

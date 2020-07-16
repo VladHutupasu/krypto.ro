@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Top 100 criptomonezi",
+    "table": {
+      "rank": "#",
+      "name": "Moneda",
+      "market_cap": "Market cap",
+      "price": "Pret",
+      "volume": "Volum",
+      "circulating_supply": "Aprovizionare",
+      "change_24h": "Variatie % (24h)",
+      "graph_7d": "Grafic (7d)"
+    }
+  }
+}

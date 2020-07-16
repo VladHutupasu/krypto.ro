@@ -1,0 +1,32 @@
+<section>
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <img class="logo" src="../assets/images/logo/logonow.png" alt="home-logo">
+            <div fxFlex fxLayoutGap="20px" fxLayoutAlign="flex-end">
+                <div class="search-bar">
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Search" autocomplete="off" (focus)="searchFocused()"
+                            (focusout)="searchUnfocused()">
+                        <mat-icon matSuffix>{{searchIcon}}</mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Language menu" class="mt-10">
+                    <mat-icon>language</mat-icon>
+                </button>
+                <mat-menu #languageMenu="matMenu">
+                    <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                        <span fxLayout="row" fxLayoutAlign="start center">
+                            <img class="language-logo" [src]="'assets/images/flags/'+lang.flag">
+                            <span>{{lang.name}}</span>
+                        </span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+</section>
