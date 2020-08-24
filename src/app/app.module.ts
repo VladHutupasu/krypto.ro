@@ -13,7 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatCardModule} from '@angular/material/card';
 import { ToolbarComponent } from './layout/toolbar/toolbar.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TrendModule } from 'ngx-trend';
@@ -21,10 +23,24 @@ import { CoinsTableComponent } from './components/coins-table/coins-table.compon
 import { CoinOverviewComponent } from './components/coin-overview/coin-overview.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import stock from 'highcharts/modules/stock.src';
+import more from 'highcharts/highcharts-more.src';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CryptoInfoBarComponent } from './layout/crypto-info-bar/crypto-info-bar.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function highchartsModules() {
+  // apply Highcharts Modules to this array
+  return [stock, more];
 }
 
 const materialModules = [
@@ -37,23 +53,29 @@ const materialModules = [
   MatPaginatorModule,
   MatSortModule,
   MatDividerModule,
-  MatMenuModule
+  MatMenuModule,
+  MatAutocompleteModule,
+  MatCardModule
 ]
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     CoinsTableComponent,
-    CoinOverviewComponent
+    CoinOverviewComponent,
+    CryptoInfoBarComponent,
+    FooterComponent    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     TrendModule, // https://github.com/scttcper/ngx-trend
+    ChartModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -61,9 +83,12 @@ const materialModules = [
         deps: [HttpClient]
       }
     }),
-    materialModules
+    materialModules,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [
+    { provide: HIGHCHARTS_MODULES, useFactory: highchartsModules }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

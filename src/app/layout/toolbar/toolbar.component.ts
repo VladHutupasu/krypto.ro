@@ -30,18 +30,6 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchIcon = 'search';
-
-  searchFocused() {
-    console.log("Search focused")
-    this.searchIcon = 'close';
-  }
-
-  searchUnfocused() {
-    console.log("Search unfocused")
-    this.searchIcon = 'search';
-  }
-
   setLanguage(lang: Language): void {
     this.selectedLanguage = lang;
     this.translate.use(lang.id);

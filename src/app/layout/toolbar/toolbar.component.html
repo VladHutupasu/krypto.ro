@@ -1,33 +1,19 @@
-<div class="wave-container">
-    <mat-toolbar>
-        <mat-toolbar-row>
-            <img class="logo" src="assets/images/logo/logo.png" alt="home-logo">
-            <div fxFlex fxLayoutGap="20px" fxLayoutAlign="flex-end">
-                <div class="search-bar">
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="Search" autocomplete="off" (focus)="searchFocused()"
-                            (focusout)="searchUnfocused()">
-                        <mat-icon matSuffix>{{searchIcon}}</mat-icon>
-                    </mat-form-field>
-                </div>
+<mat-toolbar>
+    <mat-toolbar-row>
+        <img [routerLink]="['/']" class="logo" src="assets/images/logo/logo.png" alt="home-logo">
+        <div fxFlex fxLayoutGap="20px" fxLayoutAlign="flex-end">
+            <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Language menu">
+                <mat-icon>language</mat-icon>
+            </button>
 
-                <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Language menu" class="mt-10">
-                    <mat-icon>language</mat-icon>
+            <mat-menu #languageMenu="matMenu">
+                <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                    <span fxLayout="row" fxLayoutAlign="start center">
+                        <img class="flag" [src]="'assets/images/flags/'+lang.flag">
+                        <span>{{lang.name}}</span>
+                    </span>
                 </button>
-                <mat-menu #languageMenu="matMenu">
-                    <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
-                        <span fxLayout="row" fxLayoutAlign="start center">
-                            <img class="language-logo" [src]="'assets/images/flags/'+lang.flag">
-                            <span>{{lang.name}}</span>
-                        </span>
-                    </button>
-                </mat-menu>
-            </div>
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path fill="#f7f6f4" fill-opacity="1"
-            d="M0,256L48,229.3C96,203,192,149,288,154.7C384,160,480,224,576,218.7C672,213,768,139,864,128C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-        </path>
-    </svg>
-</div>
+            </mat-menu>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

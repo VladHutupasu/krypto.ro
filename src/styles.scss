@@ -6,15 +6,64 @@ body {
 }
 body {
   margin: 0;
-  // font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 //----------------------------------*\
 // Fonts
 //----------------------------------*/
-@import "assets/fonts/_fonts.scss";
-@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500&display=swap');
+
+@import "~@angular/material/theming";
 $custom-typography: mat-typography-config(
-  $font-family: 'Lato'
+  $font-family: "Roboto Slab",
 );
 @include mat-core($custom-typography);
+// Define your application's custom theme.
+$primary: mat-palette($mat-blue);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+$theme: mat-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+  )
+));
+
+// Include theme styles for Angular Material components.
+@include angular-material-theme($theme);
+
+//----------------------------------*\
+// Useful
+//----------------------------------*/
+
+button {
+  outline: none;
+}
+
+.center-text {
+  width: 100%;
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+  outline: none;
+}
+
+.wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 50px 20px 50px 20px;
+}
+
+//----------------------------------*\
+// Loading spinner
+//----------------------------------*/
+@-webkit-keyframes moving-gradient {
+  0% {
+    background-position: -250px 0;
+  }
+  100% {
+    background-position: 250px 0;
+  }
+}

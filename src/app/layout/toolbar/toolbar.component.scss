@@ -1,38 +1,14 @@
-.search-bar {
-  font-size: 10px;
-  vertical-align: middle;
-  margin-top: 10px;
-}
-
 .logo {
   height: 150px;
-  margin-top: 20px;
+  outline: none;
+  cursor: pointer;
+  padding-top: 20px;
 }
 
-mat-toolbar {
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  background: inherit;
+.flag {
+  margin-right: 5px;
 }
 
-.wave-container {
-  position: relative;
-  background-color: #0099ff;
-  text-align: center;
-  overflow: hidden;
-}
-
-@keyframes animateWave {
-  0% {
-    transform: scale(1,0);
-  }
-  100% {
-    transform: scale(1,1);
-  }
-}
-.wave-container > svg {
-  display: block;
-  transform-origin: bottom;
-  animation: animateWave 1000ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+.mat-toolbar{
+  background-color: #3698ff;
 }

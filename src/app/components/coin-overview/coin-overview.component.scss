@@ -1,0 +1,32 @@
+.coin-logo {
+  vertical-align: bottom;
+  margin-right: 5px;
+  height: 45px;
+  width: 45px;
+}
+
+.coins-view-link {
+  color: #3586ff;
+}
+
+.coin-info-header {
+  margin: 25px 0 25px 0;
+}
+
+.coin-percentage {
+  padding-left: 5px;
+}
+
+.coin-price {
+  padding-top: 10px;
+}
+
+.links {
+  margin: 50px 0 50px 0;
+  span > .mat-icon {
+    vertical-align: sub;
+    margin-right: 10px;
+    height: 20px;
+    width: 20px;
+  }
+}
