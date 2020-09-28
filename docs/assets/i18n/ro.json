@@ -1,0 +1,28 @@
+{
+  "home": {
+    "title": "Top 100 criptomonezi în funcție de piața capitală",
+    "search": "Caută",
+    "table": {
+      "rank": "#",
+      "name": "Monedă",
+      "market_cap": "Piață capitală",
+      "price": "Preț",
+      "volume": "Volum",
+      "circulating_supply": "Aprovizionare",
+      "change_24h": "Variație % (24h)",
+      "graph_7d": "Grafic (7d)",
+      "paginator": {
+        "next_100": "Următoarele 100",
+        "back_100": "Înapoi 100"
+      }
+    },
+    "stats": {
+      "markets": "Piețe",
+      "cryptocurrencies": "Cryptomonede",
+      "total_market_cap": "Piața capitală total"
+    }
+  },
+  "coin-overview": {
+    "coins": "Monede > "
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "home": {
+    "title": "Top 100 Coins by Market Capitalization",
+    "search": "Search",
+    "table": {
+      "rank": "#",
+      "name": "Coin",
+      "market_cap": "Market cap",
+      "price": "Price",
+      "volume": "Volume",
+      "circulating_supply": "Circulating supply",
+      "change_24h": "Change % (24h)",
+      "graph_7d": "Graph (7d)",
+      "paginator":{
+        "next_100":"Next 100",
+        "back_100":"Back 100"
+      }
+    },
+    "stats": {
+      "markets": "Markets",
+      "cryptocurrencies": "Cryptocurrencies",
+      "total_market_cap": "Total market cap"
+    }
+  },
+  "coin-overview": {
+    "coins": "Coins > "
+  }
+}
