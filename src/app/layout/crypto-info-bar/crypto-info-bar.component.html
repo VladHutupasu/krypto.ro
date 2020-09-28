@@ -1,5 +1,36 @@
-<mat-card class="trends-info">
-    <div class="mat-title" fxLayout="row" fxHide.lt-sm fxLayoutAlign="center center">
+<div class="mat-subheading-2 crypto-info-text" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <span fxFlex>
+            {{'home.stats.cryptocurrencies' | translate}}
+        </span>
+        <span fxFlex class="crypto-info-numbers">
+            {{globalInfo?.active_cryptocurrencies | number:'1.0-0'}}
+        </span>
+    </div>
+
+    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <span fxFlex>
+            {{'home.stats.markets' | translate}}
+        </span>
+        <span fxFlex class="crypto-info-numbers">
+            {{globalInfo?.markets | number:'1.0-0'}}
+        </span>
+    </div>
+
+    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <span fxFlex>
+            {{'home.stats.total_market_cap' | translate}}
+        </span>
+        <span fxFlex class="crypto-info-numbers">
+            {{globalInfo?.total_market_cap.usd | currency:'USD':'symbol':'1.0-0'}}
+        </span>
+    </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<!-- <mat-card class="trends-info" fxHide.lt-sm> -->
+    <div class="mat-h3 trends-info" fxLayout="row" fxLayoutAlign="center center" fxHide.lt-sm>
         <div fxFlex fxLayoutAlign="start">
             <span class="clickable" [routerLink]="['/coins',importantTrends.trendUp1.id]" *ngIf="importantTrends.trendUp1">
                 {{importantTrends.trendUp1.symbol | uppercase}}
@@ -42,83 +73,8 @@
             <span *ngIf="!importantTrends.trendDown2" class="loading"></span>
         </div>
     </div>
+<!-- </mat-card> -->
 
-    <div class="mat-subheading-2" fxLayout="column" fxHide.gt-xs fxLayoutAlign="center">
-        <div fxLayout="row">
-            <div fxFlex fxLayoutAlign="start">
-                <span class="clickable" [routerLink]="['/coins',importantTrends.trendUp1.id]" *ngIf="importantTrends.trendUp1">
-                    {{importantTrends.trendUp1.symbol | uppercase}}
-                    {{importantTrends.trendUp1.price_change_percentage_24h | number:'1.1-1'}}%
-                    <mat-icon class="trend-up">trending_up</mat-icon>
-                </span>
-                <span *ngIf="!importantTrends.trendUp1" class="loading"></span>
-            </div>
-            <div fxFlex fxLayoutAlign="end">
-                <span class="clickable" [routerLink]="['/coins',importantTrends.trendUp2.id]" *ngIf="importantTrends.trendUp2">
-                    {{importantTrends.trendUp2.symbol | uppercase}}
-                    {{importantTrends.trendUp2.price_change_percentage_24h | number:'1.1-1'}}%
-                    <mat-icon class="trend-up">trending_up</mat-icon>
-                </span>
-                <span *ngIf="!importantTrends.trendUp2" class="loading"></span>
-            </div>
-        </div>
-
-        <div fxFlex fxLayoutAlign="center">
-            <span class="clickable" [routerLink]="['/coins',importantTrends.hot.id]" *ngIf="importantTrends.hot">
-                {{importantTrends.hot.symbol | uppercase}}
-                <mat-icon class="trend-down">whatshot</mat-icon>
-            </span>
-            <span *ngIf="!importantTrends.hot" class="loading"></span>
-        </div>
-
-        <div fxLayout="row">
-            <div fxFlex fxLayoutAlign="start">
-                <span class="clickable" [routerLink]="['/coins',importantTrends.trendDown1.id]" *ngIf="importantTrends.trendDown1">
-                    {{importantTrends.trendDown1.symbol | uppercase}}
-                    {{importantTrends.trendDown1.price_change_percentage_24h | number:'1.1-1'}}%
-                    <mat-icon class="trend-down">trending_down</mat-icon>
-                </span>
-                <span *ngIf="!importantTrends.trendDown1" class="loading"></span>
-            </div>
-            <div fxFlex fxLayoutAlign="end">
-                <span class="clickable" [routerLink]="['/coins',importantTrends.trendDown2.id]" *ngIf="importantTrends.trendDown2">
-                    {{importantTrends.trendDown2.symbol | uppercase}}
-                    {{importantTrends.trendDown2.price_change_percentage_24h | number:'1.1-1'}}%
-                    <mat-icon class="trend-down">trending_down</mat-icon>
-                </span>
-                <span *ngIf="!importantTrends.trendDown2" class="loading"></span>
-            </div>
-        </div>
-
-    </div>
-</mat-card>
+<mat-divider></mat-divider>
 
 
-<div class="mat-subheading-2 crypto-info-text" fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <span fxFlex>
-            {{'home.stats.cryptocurrencies' | translate}}
-        </span>
-        <span fxFlex class="crypto-info-numbers">
-            {{globalInfo?.active_cryptocurrencies | number:'1.0-0'}}
-        </span>
-    </div>
-
-    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <span fxFlex>
-            {{'home.stats.markets' | translate}}
-        </span>
-        <span fxFlex class="crypto-info-numbers">
-            {{globalInfo?.markets | number:'1.0-0'}}
-        </span>
-    </div>
-
-    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <span fxFlex>
-            {{'home.stats.total_market_cap' | translate}}
-        </span>
-        <span fxFlex class="crypto-info-numbers">
-            {{globalInfo?.total_market_cap.usd | currency:'USD':'symbol':'1.0-0'}}
-        </span>
-    </div>
-</div>

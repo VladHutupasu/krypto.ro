@@ -1,7 +1,12 @@
 .crypto-info-text {
+  margin-bottom: 60px;
   @media only screen and (max-width: 800px) {
     font-size: 12px;
   }
+}
+
+.mat-icon{
+  vertical-align: sub;
 }
 
 .crypto-info-numbers {
@@ -18,7 +23,8 @@
 }
 
 .trends-info {
-  margin-bottom: 60px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 span.loading {
