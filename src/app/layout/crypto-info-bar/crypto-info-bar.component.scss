@@ -1,16 +1,31 @@
 .crypto-info-text {
-  margin-bottom: 60px;
   @media only screen and (max-width: 800px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
-.mat-icon{
+.mat-card {
+  color: black;
+  background: rgba(0, 0, 0, 0.04);
+  width: 100%;
+  // box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  // box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  // box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  // box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  // box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+mat-icon {
   vertical-align: sub;
+  &.stats {
+    color:#2875c7;
+  }
 }
 
 .crypto-info-numbers {
-  color: #0e375a;
+  color: #2875c7;
   font-weight: 500;
 }
 

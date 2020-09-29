@@ -1,5 +1,5 @@
-<div class="mat-subheading-2 crypto-info-text" fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+<div class="mat-subheading-2 crypto-info-text" fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <!-- <div fxFlex fxLayout="column" fxLayoutAlign="center center">
         <span fxFlex>
             {{'home.stats.cryptocurrencies' | translate}}
         </span>
@@ -24,7 +24,37 @@
         <span fxFlex class="crypto-info-numbers">
             {{globalInfo?.total_market_cap.usd | currency:'USD':'symbol':'1.0-0'}}
         </span>
-    </div>
+    </div> -->
+
+    <mat-card fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon class="stats">local_atm</mat-icon>
+        <span fxFlex>
+            {{'home.stats.cryptocurrencies' | translate}}
+        </span>
+        <span fxFlex class="crypto-info-numbers">
+            {{globalInfo?.active_cryptocurrencies | number:'1.0-0'}}
+        </span>
+    </mat-card>
+
+    <mat-card fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon class="stats">storefront</mat-icon>
+        <span fxFlex>
+            {{'home.stats.markets' | translate}}
+        </span>
+        <span fxFlex class="crypto-info-numbers">
+            {{globalInfo?.markets | number:'1.0-0'}}
+        </span>
+    </mat-card>
+
+    <mat-card fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon class="stats">payments</mat-icon>
+        <span fxFlex>
+            {{'home.stats.total_market_cap' | translate}}
+        </span>
+        <span fxFlex class="crypto-info-numbers">
+            {{globalInfo?.total_market_cap.usd | currency:'USD':'symbol':'1.0-0'}}
+        </span>
+    </mat-card>
 </div>
 
 <mat-divider></mat-divider>
