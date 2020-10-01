@@ -12,6 +12,7 @@ export class CryptoInfoBarComponent implements OnInit {
 
   globalInfo: any;
   sortedTrends: MarketQuote[];
+  readonly skeletonSize = { width: '100px', height: '20px' };
 
   importantTrends = {
     trendUp1: null,

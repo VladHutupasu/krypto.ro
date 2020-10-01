@@ -9,6 +9,50 @@
   margin-right: 5px;
 }
 
-.mat-toolbar{
-  background-color: #3698ff;
+.mat-toolbar {
+  // background-color: #3698ff;
+  background-color: #1f3852;
+}
+
+.search-box {
+  font-size: 12px;
+}
+
+.coin-logo {
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.language-button {
+  color: white;
+  margin-right: 5px !important;
+}
+
+.search-button {
+  color: white;
+}
+
+//input outline color
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white !important;
+  // opacity: 1!important;
+}
+
+//mat-input focused color
+::ng-deep
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-thick {
+  color: #2e92e8 !important;
+}
+
+/* input color class */
+::ng-deep input.mat-input-element {
+  color: white;
+}
+
+//input outline color
+::ng-deep .mat-form-field-wrapper {
+  padding: 0;
 }

@@ -28,10 +28,12 @@ import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import stock from 'highcharts/modules/stock.src';
 import more from 'highcharts/highcharts-more.src';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CryptoInfoBarComponent } from './layout/crypto-info-bar/crypto-info-bar.component';
+import { CryptoInfoBarComponent } from './components/crypto-info-bar/crypto-info-bar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -64,7 +66,8 @@ const materialModules = [
     CoinsTableComponent,
     CoinOverviewComponent,
     CryptoInfoBarComponent,
-    FooterComponent    
+    FooterComponent,
+    HomePageComponent    
   ],
   imports: [
     BrowserModule,
@@ -84,6 +87,7 @@ const materialModules = [
       }
     }),
     materialModules,
+    NgxSkeletonLoaderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

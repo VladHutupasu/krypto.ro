@@ -19,37 +19,18 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class CoinsTableComponent implements OnInit {
 
-  title = 'Top 100 criptomonezi';
-  allCoins: CoinDescription[] = [];
-  form: FormGroup;
-  searchResults$: Observable<CoinDescription[]>;
-
   displayedColumns: string[] = ['market_cap_rank', 'name', 'market_cap', 'current_price', 'total_volume', 'circulating_supply', 'price_change_percentage_24h', 'sparkline7d'];
   dataSource = new MatTableDataSource(new Array<MarketQuote>(100)); // create empty array such that we get the loading effect
-  searchIcon = 'search';
   pageNumber = 1;
   loadingCoins: boolean = true;
+  readonly skeletonSize = { width: '100px', height: '15px' };
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  @Input() panelWidth: string | number;
-
-  constructor(private cryptoAPI: CryptoApiService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder, private dataSharingService: DataSharingService) { }
+  constructor(private cryptoAPI: CryptoApiService, private dataSharingService: DataSharingService) { }
 
   ngOnInit(): void {
-    this.initializeSearchForm();
-    this.listenToSearchChanges();
     this.fetchTop100Coins();
-    this.fetchCoinsList();
-  }
-
-
-  fetchCoinsList() {
-    this.cryptoAPI.getCoinsList().pipe(
-      tap(coins => {
-        console.log("Coins list - ", coins);
-        this.allCoins = coins;
-      })).toPromise();
   }
 
   fetchTop100Coins() {
@@ -61,53 +42,6 @@ export class CoinsTableComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.loadingCoins = false;
       })).toPromise();
-  }
-
-  listenToSearchChanges() {
-    this.searchResults$ = this.form.valueChanges.pipe(
-      debounceTime(400),
-      map(form => form.search),
-      distinctUntilChanged(),
-      map(searchWord => {
-        let searchResults = this.fuzzySearch(searchWord).map(result => result.obj);
-        //TODO: I dont really like this approach
-        this.setLogoForEachResult(searchResults);
-        return searchResults;
-      })
-    );
-  }
-
-  setLogoForEachResult(searchResults: CoinDescription[]) {
-    this.cryptoAPI.getMultiInfoCoin(searchResults.map(coin => coin.id)).subscribe(response => {
-      response.forEach(info => {
-        searchResults.find(element => element.id === info.id).image = info.image;
-      });
-    });
-  }
-
-  fuzzySearch(searchWord: string) {
-    return go(searchWord, this.allCoins, {
-      keys: ['symbol', 'name'],
-      limit: 5,
-      allowTypo: false,
-      threshold: -10000,
-    })
-  }
-
-  initializeSearchForm() {
-    this.form = this.formBuilder.group({
-      search: ['']
-    });
-  }
-
-  searchFocused() {
-    console.log("Search focused")
-    this.searchIcon = 'close';
-  }
-
-  searchUnfocused() {
-    console.log("Search unfocused")
-    this.searchIcon = 'search';
   }
 
   next100() {

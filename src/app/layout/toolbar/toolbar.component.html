@@ -1,19 +1,39 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <img [routerLink]="['/']" class="logo" src="assets/images/logo/logo.png" alt="home-logo">
+        <img [routerLink]="['/']" class="logo" src="assets/images/logo/logo-white.png" alt="home-logo">
         <div fxFlex fxLayoutGap="20px" fxLayoutAlign="flex-end">
-            <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Language menu">
-                <mat-icon>language</mat-icon>
-            </button>
-
-            <mat-menu #languageMenu="matMenu">
-                <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
-                    <span fxLayout="row" fxLayoutAlign="start center">
-                        <img class="flag" [src]="'assets/images/flags/'+lang.flag">
-                        <span>{{lang.name}}</span>
-                    </span>
+            <div>
+                <form [formGroup]="form" fxHide.lt-sm>
+                    <mat-form-field appearance="outline" class="search-box">
+                        <input matInput formControlName="search" [matAutocomplete]="auto">
+                        <mat-icon class="search-button" matSuffix>search</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let result of searchResults$ | async" [value]="result.name"
+                                class="clickable" [routerLink]="['/coins',result.id]">
+                                <div *ngIf="result.image" class="mat-small">
+                                    <img [src]="result.image" class="coin-logo" [alt]="result.name">
+                                    <span>{{result.name}} ({{result.symbol | uppercase}})</span>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div fxLayoutAlign="center center">
+                <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Language menu"
+                    class="language-button">
+                    <mat-icon>public</mat-icon>
                 </button>
-            </mat-menu>
+
+                <mat-menu #languageMenu="matMenu">
+                    <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                        <span fxLayout="row" fxLayoutAlign="start center">
+                            <img class="flag" [src]="'assets/images/flags/'+lang.flag">
+                            <span>{{lang.name}}</span>
+                        </span>
+                    </button>
+                </mat-menu>
+            </div>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
