@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1601564895704,
+  "timestamp": 1601646061413,
   "index": "https://vladhutupasu.github.io/krypto.ro/index.html",
   "assetGroups": [
     {
@@ -13,8 +13,8 @@
       "urls": [
         "https://vladhutupasu.github.io/krypto.ro/favicon.ico",
         "https://vladhutupasu.github.io/krypto.ro/index.html",
-        "https://vladhutupasu.github.io/krypto.ro/main-es2015.28989d0617d59a1d1d4d.js",
-        "https://vladhutupasu.github.io/krypto.ro/main-es5.28989d0617d59a1d1d4d.js",
+        "https://vladhutupasu.github.io/krypto.ro/main-es2015.4b37538f4bdbbfa75dd1.js",
+        "https://vladhutupasu.github.io/krypto.ro/main-es5.4b37538f4bdbbfa75dd1.js",
         "https://vladhutupasu.github.io/krypto.ro/manifest.webmanifest",
         "https://vladhutupasu.github.io/krypto.ro/polyfills-es2015.a0fa45e0fa52702b64f0.js",
         "https://vladhutupasu.github.io/krypto.ro/polyfills-es5.2dcde1efe3c1bf4aaa25.js",
@@ -71,9 +71,9 @@
     "https://vladhutupasu.github.io/krypto.ro/assets/images/logo/logo-black.png": "35f8e914197f966d5bdc17590d43ceef2237d22c",
     "https://vladhutupasu.github.io/krypto.ro/assets/images/logo/logo-white.png": "c9f43d953194e42d35d7bbd616471ddd9e9e64fc",
     "https://vladhutupasu.github.io/krypto.ro/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "https://vladhutupasu.github.io/krypto.ro/index.html": "cdf88720cb495b2e1ce3718300fcae6927084e4d",
-    "https://vladhutupasu.github.io/krypto.ro/main-es2015.28989d0617d59a1d1d4d.js": "09aed541631c4081412227f055b35046e815f430",
-    "https://vladhutupasu.github.io/krypto.ro/main-es5.28989d0617d59a1d1d4d.js": "5ca8147cc03784d5780915bacb8300d8656ca5b5",
+    "https://vladhutupasu.github.io/krypto.ro/index.html": "a03690846d88a6eda58cfe5eac969299105c30cc",
+    "https://vladhutupasu.github.io/krypto.ro/main-es2015.4b37538f4bdbbfa75dd1.js": "9a46fc5268fd1c253c081e3409c9feaa7a4f8313",
+    "https://vladhutupasu.github.io/krypto.ro/main-es5.4b37538f4bdbbfa75dd1.js": "96082feaec723be93f8eef28d9cbe9b054de4df8",
     "https://vladhutupasu.github.io/krypto.ro/manifest.webmanifest": "f1b25b3e3bbfe8a607202ba3aeb5714e6a7e1769",
     "https://vladhutupasu.github.io/krypto.ro/polyfills-es2015.a0fa45e0fa52702b64f0.js": "72ad4ccc0a3916ae4598199447cdeadd6d380570",
     "https://vladhutupasu.github.io/krypto.ro/polyfills-es5.2dcde1efe3c1bf4aaa25.js": "ff14d90e08622190714660721edab5f43578829a",
