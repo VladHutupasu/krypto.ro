@@ -74,10 +74,30 @@ mat-table {
   }
 }
 
-.paginator{
+.paginator {
   padding-top: 10px;
   padding-bottom: 10px;
-  .mat-icon{
+  .mat-icon {
     padding-bottom: 4px;
+  }
+}
+
+.rank-tooltip {
+  border-radius: 4px;
+  padding: 0px 4px;
+  display: inline-block;
+  font-size: 10px;
+  background: rgb(239, 242, 245);
+  margin-right: 5px;
+  color: rgb(88, 102, 126);
+}
+
+@media only screen and (max-width: 800px) {
+  .mat-cell {
+    padding-left: 15px !important;
+  }
+
+  .mat-header-cell {
+    padding-left: 15px !important;
   }
 }

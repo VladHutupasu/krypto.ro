@@ -1,23 +1,26 @@
 <mat-toolbar>
     <mat-toolbar-row>
         <img [routerLink]="['/']" class="logo" src="assets/images/logo/logo-white.png" alt="home-logo">
-        <div fxFlex fxLayoutGap="20px" fxLayoutAlign="flex-end">
-            <div>
-                <form [formGroup]="form" fxHide.lt-sm>
-                    <mat-form-field appearance="outline" class="search-box">
-                        <input matInput formControlName="search" [matAutocomplete]="auto">
-                        <mat-icon class="search-button" matSuffix>search</mat-icon>
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let result of searchResults$ | async" [value]="result.name"
-                                class="clickable" [routerLink]="['/coins',result.id]">
-                                <div *ngIf="result.image" class="mat-small">
-                                    <img [src]="result.image" class="coin-logo" [alt]="result.name">
-                                    <span>{{result.name}} ({{result.symbol | uppercase}})</span>
-                                </div>
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </form>
+        <div fxFlex fxLayoutAlign="flex-end" fxLayoutGap="20px">
+            <form [formGroup]="form" fxHide.lt-sm>
+                <mat-form-field appearance="outline" class="search-box">
+                    <input matInput formControlName="search" [matAutocomplete]="auto">
+                    <mat-icon class="search-button" matSuffix>search</mat-icon>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let result of searchResults$ | async" [value]="result.name"
+                            class="clickable" [routerLink]="['/coins',result.id]" (click)="showSearchBox = false">
+                            <div *ngIf="result.image" class="mat-small">
+                                <img [src]="result.image" class="coin-logo" [alt]="result.name">
+                                <span>{{result.name}} ({{result.symbol | uppercase}})</span>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+            <div fxLayoutAlign="center center" fxHide fxShow.lt-sm>
+                <button mat-icon-button aria-label="Search" class="language-button" (click)="showSearchBox = true">
+                    <mat-icon>search</mat-icon>
+                </button>
             </div>
             <div fxLayoutAlign="center center">
                 <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Language menu"
@@ -37,3 +40,15 @@
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
+
+<div class="mobile-search" *ngIf="showSearchBox">
+    <div class="mobile-search-box">
+        <form [formGroup]="form" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+            <mat-form-field appearance="outline" fxFlex>
+                <input matInput formControlName="search" [matAutocomplete]="auto">
+                <button mat-flat-button matSuffix style="vertical-align: super;"
+                    (click)="showSearchBox = false">Cancel</button>
+            </mat-form-field>
+        </form>
+    </div>
+</div>

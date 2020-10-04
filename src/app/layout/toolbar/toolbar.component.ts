@@ -17,6 +17,7 @@ import { go } from 'fuzzysort';
 export class ToolbarComponent implements OnInit {
 
   selectedLanguage: Language;
+  showSearchBox : boolean = false;
   languages: Language[] = [
     {
       id: 'en',

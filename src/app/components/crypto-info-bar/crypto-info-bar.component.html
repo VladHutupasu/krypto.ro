@@ -43,8 +43,8 @@
 </div>
 
 
-<mat-card fxHide.lt-sm>
-    <mat-card-content class="trends-info-card" fxLayout="row">
+<mat-card fxHide.lt-md>
+    <mat-card-content class="trends-info-card" fxLayout="row" fxFlex>
         <div fxFlex="20" fxLayoutAlign="center center">
             <span class="clickable" [routerLink]="['/coins',importantTrends.trendUp1.id]"
                 *ngIf="importantTrends.trendUp1">

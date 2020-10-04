@@ -10,7 +10,6 @@
 }
 
 .mat-toolbar {
-  // background-color: #3698ff;
   background-color: #1f3852;
 }
 
@@ -34,16 +33,29 @@
   color: white;
 }
 
+.mobile-search {
+  background-color: #f7f6f4;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  z-index: 935;
+  overflow: scroll;
+  width: 100%;
+}
+
+.mobile-search-box {
+  background-color: #1f3852;
+  display: flex;
+}
+
 //input outline color
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   color: white !important;
-  // opacity: 1!important;
 }
 
 //mat-input focused color
-::ng-deep
-  .mat-form-field-appearance-outline.mat-focused
-  .mat-form-field-outline-thick {
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: #2e92e8 !important;
 }
 
