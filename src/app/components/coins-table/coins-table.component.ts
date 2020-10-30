@@ -1,16 +1,10 @@
-import { Component, OnInit, ViewChild, Input, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { CryptoApiService } from 'src/app/services/crypto-api.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MarketQuote } from 'src/app/models/market-quote';
-import { CoinDescription } from 'src/app/models/coin-description';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { debounceTime, map, distinctUntilChanged, tap } from 'rxjs/operators';
-import { go } from 'fuzzysort';
-import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
-import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-coins-table',

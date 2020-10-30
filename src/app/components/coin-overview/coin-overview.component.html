@@ -1,50 +1,120 @@
-<div class="wrapper" fxLayout="column">
-    <div fxLayout="row" class="mat-h4">
+<div fxLayout="column">
+    <section id="back-to-coins" class="mat-h4">
         <span class="clickable coins-view-link"
-            [routerLink]="['/']">{{'coin-overview.coins' | translate}}</span>{{tokenData?.name}}
+            [routerLink]="['/']">{{'coin-overview.coins' | translate}}</span>&nbsp;{{tokenData?.name}}
+    </section>
+
+    <section fxLayout="row" fxLayout.lt-sm="column" fxFlex>
+        <div fxLayout="column" fxLayoutGap="100px" fxFlex="30">
+            <div *ngIf="tokenData">
+                <img [src]="tokenData.image.small" class="coin-logo" [alt]="tokenData.name">
+                <span class="mat-display-1">{{tokenData.name}}</span>
+                <span class="mat-h3 grayed-out">&nbsp;({{tokenData.symbol | uppercase}})</span>
+            </div>
+            <div *ngIf="!tokenData">
+                <ngx-skeleton-loader appearance="circle" [theme]="{width:'45px', height:'45px'}"></ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{width:'140px', height:'30px'}"></ngx-skeleton-loader>
+            </div>
+
+            <!-- LINKS -->
+            <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" class="mat-h4 links">
+                <div>
+                    <mat-icon id="rank-icon">bar_chart</mat-icon>
+                    <span id="rank-number">Rank {{tokenData?.market_cap_rank}}</span>
+                </div>
+                <div>
+                    <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank" color="primary"
+                        [disabled]="tokenData?.links.homepage.leng=== 0">
+                        <mat-icon>link</mat-icon>Website
+                    </a>
+                </div>
+                <div>
+                    <a mat-stroked-button href="{{tokenData?.links.repos_url.github[0]}}" target="_blank"
+                        color="primary" [disabled]="tokenData?.links.repos_url.github.leng=== 0">
+                        <mat-icon>code</mat-icon>Github
+                    </a>
+                </div>
+                <div>
+                    <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank" color="primary"
+                        [disabled]="!tokenData?.links.subreddit_url">
+                        <mat-icon>share</mat-icon>Reddit
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRICE & % -->
+        <div fxLayout="column" fxLayoutGap="100px" fxFlex="70">
+            <div class="coin-price" *ngIf="tokenData">
+                <span class="mat-display-1">
+                    {{tokenData.market_data.current_price.usd | currency:'USD':'symbol-narrow':'1.2-6'}}
+                </span>
+                <span class="coin-percentage mat-h1"
+                    [ngStyle]="{'color': tokenData.market_data.price_change_percentage_24h > 0 ? '#009e73' : 'red'}">
+                    ({{tokenData.market_data.price_change_percentage_24h | number:'1.2-2'}}%)
+                </span>
+            </div>
+            <div *ngIf="!tokenData">
+                <ngx-skeleton-loader [theme]="{width:'200px', height:'30px'}"></ngx-skeleton-loader>
+            </div>
+
+            <!-- Table -->
+            <div>
+                <mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+                    <ng-container matColumnDef="market_cap">
+                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.market_cap' | translate}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.market_cap.usd | currency}}
+                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                            </ngx-skeleton-loader>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total_volume">
+                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.volume' | translate}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.total_volume.usd | currency}}
+                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                            </ngx-skeleton-loader>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="circulating_supply">
+                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.circulating_supply' | translate}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.circulating_supply | number:'1.0-0'}}
+                            {{tokenData?.symbol | uppercase}}
+                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                            </ngx-skeleton-loader>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="max_supply">
+                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.max_supply' | translate}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{element?.max_supply | number:'1.0-0'}}
+                            {{tokenData?.symbol | uppercase}}
+                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                            </ngx-skeleton-loader>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </div>
+        </div>
+    </section>
+
+    <div id="chart-container" *ngIf="chartData">
+        <ejs-chart [primaryXAxis]="xAxis" [primaryYAxis]="yAxis" [chartArea]="chartArea"
+            (tooltipRender)="tooltipRender($event)" [tooltip]="tooltip" useGroupingSeparator=true background="#f7f6f4"
+            [zoomSettings]="zoomSettings" (load)="load($event)">
+            <e-series-collection>
+                <e-series type="Line" [dataSource]="chartData" fill="#3698ff" xName="datetime" yName="price"></e-series>
+            </e-series-collection>
+        </ejs-chart>
     </div>
 
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center center" class="coin-info-header">
-        <div *ngIf="tokenData" fxFlex>
-            <img [src]="tokenData.image.small" class="coin-logo" [alt]="tokenData.name">
-            <span class="mat-display-1">{{tokenData.name}} ({{tokenData.symbol | uppercase}})</span>
-        </div>
-
-        <div class="coin-price" *ngIf="tokenData" fxFlex fxLayoutAlign="end">
-            <span
-                class="mat-h1">{{tokenData.market_data.current_price.usd | currency:'USD':'symbol-narrow':'1.2-6'}}</span>
-            <span class="coin-percentage"
-                [ngStyle]="{'color': tokenData.market_data.price_change_percentage_24h > 0 ? 'green' : 'red'}">
-                {{tokenData.market_data.price_change_percentage_24h | number:'1.2-2'}}%
-            </span>
-        </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" class="mat-h4 links">
-        <div fxFlex>
-            <span>
-                <mat-icon>insert_chart</mat-icon>Rank {{tokenData?.market_cap_rank}}
-            </span>
-        </div>
-
-        <div fxFlex>
-            <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank" color="primary" [disabled]="tokenData?.links.homepage.length === 0">
-                <mat-icon>link</mat-icon>Website
-            </a>
-        </div>
-
-        <div fxFlex>
-            <a mat-stroked-button href="{{tokenData?.links.repos_url.github[0]}}" target="_blank" color="primary" [disabled]="tokenData?.links.repos_url.github.length === 0">
-                <mat-icon>code</mat-icon>Github
-            </a>
-        </div>
-
-        <div fxFlex>
-            <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank" color="primary" [disabled]="!tokenData?.links.subreddit_url">
-                <mat-icon>share</mat-icon>Reddit
-            </a>
-        </div>
-    </div>
-
-    <div [chart]="chart"></div>
 </div>

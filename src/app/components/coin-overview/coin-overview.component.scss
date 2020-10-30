@@ -1,8 +1,40 @@
+.mat-card {
+  color: black;
+  background: rgba(0, 0, 0, 0.04);
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
 .coin-logo {
   vertical-align: bottom;
   margin-right: 5px;
   height: 45px;
   width: 45px;
+}
+
+#back-to-coins {
+  margin-bottom: 50px;
+}
+
+#rank-icon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+#rank-number {
+  background: rgb(92, 184, 92);
+  border-radius: 0.25em;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  vertical-align: baseline;
+  line-height: 1;
+}
+
+#coin-chart {
+  margin-top: 40px;
 }
 
 .coins-view-link {
@@ -21,12 +53,32 @@
   padding-top: 10px;
 }
 
-.links {
-  margin: 50px 0 50px 0;
-  span > .mat-icon {
-    vertical-align: sub;
-    margin-right: 10px;
-    height: 20px;
-    width: 20px;
-  }
+.links .mat-icon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.grayed-out {
+  color: rgba(39, 52, 64, 0.5);
+}
+
+mat-table {
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+}
+
+mat-header-cell {
+  font-size: 14px;
+}
+
+mat-header-cell,
+mat-cell {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+}
+
+#chart-container {
+  margin-top: 25px;
 }

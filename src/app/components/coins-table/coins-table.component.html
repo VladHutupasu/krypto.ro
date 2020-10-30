@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="table-container">
+<div>
     <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="market_cap_rank" sticky>
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.rank' | translate}} </mat-header-cell>
@@ -48,7 +48,7 @@
         <ng-container matColumnDef="current_price">
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.price' | translate}}
             </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.current_price | currency}}
+            <mat-cell *matCellDef="let element" style="color:#2196f3"> {{element?.current_price | currency}}
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>
@@ -87,12 +87,12 @@
 
         <ng-container matColumnDef="sparkline7d">
             <mat-header-cell *matHeaderCellDef> {{'home.table.graph_7d' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element">
+            <mat-cell *matCellDef="let element" class="clickable" [routerLink]="['/coins',element?.id]">
                 <ngx-trend [data]="element?.sparkline_in_7d.price" [autoDraw]="true" [autoDrawDuration]="1000"
                     autoDrawEasing="ease-in" [smooth]="true" radius="25" strokeWidth="1.5" stroke="#a68b23"
                     strokeLinecap="round"></ngx-trend>
-                    <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                    </ngx-skeleton-loader>
+                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                </ngx-skeleton-loader>
             </mat-cell>
         </ng-container>
 

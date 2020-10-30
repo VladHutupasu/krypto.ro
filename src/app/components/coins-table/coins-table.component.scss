@@ -67,6 +67,14 @@ mat-table {
   background-color: inherit;
 }
 
+::ng-deep .mat-sort-header-arrow {
+  margin-right: -20px !important;
+}
+
+::ng-deep .mat-sort-header-container {
+  padding-right: 5px !important;
+}
+
 .table-title {
   margin: 30px 0px 20px 0px;
   @media only screen and (max-width: 800px) {
@@ -93,11 +101,15 @@ mat-table {
 }
 
 @media only screen and (max-width: 800px) {
-  .mat-cell {
-    padding-left: 15px !important;
+  .mat-column-current_price {
+    max-width: 80px;
   }
 
-  .mat-header-cell {
-    padding-left: 15px !important;
+  .mat-column-market_cap {
+    max-width: 130px;
+  }
+
+  .mat-column-price_change_percentage_24h {
+    max-width: 100px;
   }
 }
