@@ -20,12 +20,18 @@ import { environment } from '../environments/environment';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MaterialModule } from './material.module';
-import { CategoryService, ChartModule, LineSeriesService, DateTimeService, TooltipService, ChartAnnotationService, ColumnSeriesService, LegendService, RangeColumnSeriesService, ScrollBarService, StackingColumnSeriesService, ZoomService } from '@syncfusion/ej2-angular-charts';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import stock from 'highcharts/modules/stock.src';
+import more from 'highcharts/highcharts-more.src';
 
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function highchartsModules() {
+  return [stock, more];
 }
 
 @NgModule({
@@ -47,7 +53,6 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     HttpClientModule,
     TrendModule, // https://github.com/scttcper/ngx-trend
-    // Syncfusion charts
     ChartModule,
     TranslateModule.forRoot({
       loader: {
@@ -60,26 +65,10 @@ export function createTranslateLoader(http: HttpClient) {
     NgxSkeletonLoaderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [
-    //Syncfusion charts
-    // LineSeriesService,
-    // CategoryService,
-    // DateTimeService,
-    // TooltipService
-    
-    CategoryService, 
-    DateTimeService, 
-    ScrollBarService,
-    ZoomService, 
-    LineSeriesService, 
-    ColumnSeriesService,
-    ChartAnnotationService, 
-    RangeColumnSeriesService, 
-    StackingColumnSeriesService, 
-    LegendService, 
-    TooltipService,
+  providers: [    
     CurrencyPipe,
-    DatePipe
+    DatePipe,
+    { provide: HIGHCHARTS_MODULES, useFactory: highchartsModules }
   ],
   bootstrap: [AppComponent]
 })

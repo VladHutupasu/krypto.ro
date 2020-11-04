@@ -4,11 +4,8 @@ import { CryptoApiService } from "src/app/services/crypto-api.service";
 import { tap } from "rxjs/operators";
 import { MatTableDataSource } from "@angular/material/table";
 import { MarketQuote } from "src/app/models/market-quote";
-import {
-  ILoadedEventArgs,
-  ITooltipRenderEventArgs,
-} from "@syncfusion/ej2-angular-charts";
 import { CurrencyPipe, DatePipe } from "@angular/common";
+import { StockChart } from "angular-highcharts";
 
 @Component({
   selector: "app-coin-overview",
@@ -30,21 +27,7 @@ export class CoinOverviewComponent implements OnInit {
   dataSource = new MatTableDataSource(new Array<MarketQuote>(1));
 
   // Chart
-  chartData: Object[];
-  xAxis: Object;
-  yAxis: Object;
-  chartArea: Object;
-  tooltip: Object;
-  load(args: ILoadedEventArgs): void {
-    args.chart.zoomModule.isZoomed = true;
-  }
-  zoomSettings: Object = {
-    mode: "X",
-    enableMouseWheelZooming: true,
-    enablePinchZooming: true,
-    enableSelectionZooming: true,
-    enableScrollbar: true,
-  };
+  chart: StockChart;
 
   constructor(
     private route: ActivatedRoute,
@@ -80,67 +63,87 @@ export class CoinOverviewComponent implements OnInit {
   }
 
   generateChart(result: any) {
-    if (result.prices.length === result.total_volumes.length) {
-      this.chartData = [];
-      for (let i = 0; i < result.prices.length; i++) {
-        this.chartData.push({
-          datetime: new Date(result.prices[i][0]),
-          price: result.prices[i][1],
-          marketCap: result.market_caps[i][1],
-          volume: result.total_volumes[i][1],
-        });
-      }
+    if (result.prices.length !== result.total_volumes.length) {
+      console.error("Different sizes of arrays");
+      return;
     }
-    this.xAxis = {
-      zoomFactor: 0.99,
-      valueType: "DateTime",
-      labelFormat: "d MMM y",
-      rangePadding: "None",
-      edgeLabelPlacement: "Shift",
-      labelIntersectAction: "Rotate45",
-      intervalType: "Years"
-    };
-    this.yAxis = {
-      rangePadding: "Round",
-      labelFormat: "c",
-    };
 
-    this.chartArea = {
-      border: {
-        width: 0,
+    let prices = [];
+    let volumes = [];
+
+    for (let i = 0; i < result.prices.length; i++) {
+      if (result.prices[i][0] != result.total_volumes[i][0]) {
+        console.error("Different timestamps");
+        return;
+      }
+      prices.push([new Date(result.prices[i][0]), result.prices[i][1]]);
+      volumes.push([
+        new Date(result.total_volumes[i][0]),
+        result.total_volumes[i][1],
+      ]);
+    }
+    
+    this.chart = new StockChart({
+      rangeSelector: {
+        selected: 5,
       },
-    };
-    this.tooltip = { enable: true };
-  }
+      yAxis: [
+        {
+          labels: {
+            align: "left",
+          },
+          height: "80%",
+          resize: {
+            enabled: true,
+          },
+        },
+        {
+          labels: {
+            align: "left",
+          },
+          top: "80%",
+          height: "20%",
+          offset: 0,
+          lineWidth: 2,
+        },
+      ],
+      xAxis: {
+        type: "datetime",
+      },
+      tooltip: {
+        split: false,
+        shared: true,
+        followPointer: true,
+      },
+      series: [
+        {
+          type: "line",
+          name: "Price",
+          data: prices,
+          tooltip: {
+            valueSuffix: " $",
+            valueDecimals: 2,
+          },
+        },
+        {
+          type: "column",
+          name: "Volume",
+          data: volumes,
+          yAxis: 1,
+          tooltip: {
+            valueSuffix: " $",
+            valueDecimals: 0,
+          },
+        },
+      ],
 
-  tooltipRender(args: ITooltipRenderEventArgs): void {
-    let market_cap =
-      "<br>Market cap: " +
-      "<b>" +
-      this.currencyPipe.transform(
-        this.chartData[args.point.index]["marketCap"],
-        "USD",
-        "symbol",
-        "1.0-0"
-      ) +
-      "</b>";
-    let volume =
-      "<br>Volume: " +
-      "<b>" +
-      this.currencyPipe.transform(
-        this.chartData[args.point.index]["volume"],
-        "USD",
-        "symbol",
-        "1.0-0"
-      ) +
-      "</b>";
-    args.text =
-      "Price: " +
-      "<b>" +
-      this.currencyPipe.transform(args.point.y) +
-      "</b>" +
-      market_cap +
-      volume;
-    args.headerText = this.datePipe.transform(args.point.x, "LLLL dd y, HH:mm");
+      credits: {
+        enabled: false,
+      },
+      chart: {
+        backgroundColor: "#f7f6f4",
+        height: "550px",
+      },
+    });
   }
 }

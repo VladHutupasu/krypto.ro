@@ -107,14 +107,6 @@
         </div>
     </section>
 
-    <div id="chart-container" *ngIf="chartData">
-        <ejs-chart [primaryXAxis]="xAxis" [primaryYAxis]="yAxis" [chartArea]="chartArea"
-            (tooltipRender)="tooltipRender($event)" [tooltip]="tooltip" useGroupingSeparator=true background="#f7f6f4"
-            [zoomSettings]="zoomSettings" (load)="load($event)">
-            <e-series-collection>
-                <e-series type="Line" [dataSource]="chartData" fill="#3698ff" xName="datetime" yName="price"></e-series>
-            </e-series-collection>
-        </ejs-chart>
-    </div>
+    <div id="chart-container" [chart]="chart"></div>
 
 </div>
