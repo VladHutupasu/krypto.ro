@@ -11,9 +11,9 @@
       "circulating_supply": "Circulating supply",
       "change_24h": "Change % (24h)",
       "graph_7d": "Graph (7d)",
-      "paginator":{
-        "next_100":"Next 100",
-        "back_100":"Back 100"
+      "paginator": {
+        "next_100": "Next 100",
+        "back_100": "Back 100"
       }
     },
     "stats": {
@@ -23,6 +23,12 @@
     }
   },
   "coin-overview": {
-    "coins": "Coins > "
+    "coins": "Coins > ",
+    "table": {
+      "market_cap": "Market cap",
+      "volume": "Volume 24h",
+      "circulating_supply": "Circulating supply",
+      "max_supply": "Max supply"
+    }
   }
 }

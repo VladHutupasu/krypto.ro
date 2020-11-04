@@ -23,6 +23,12 @@
     }
   },
   "coin-overview": {
-    "coins": "Monede > "
+    "coins": "Monede > ",
+    "table":{
+      "market_cap": "Piață capitală",
+      "volume": "Volum 24h",
+      "circulating_supply": "Aprovizionare",
+      "max_supply": "Aprovizionare maximă"
+    }
   }
 }
