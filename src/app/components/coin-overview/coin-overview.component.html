@@ -1,11 +1,12 @@
-<div fxLayout="column">
-    <section id="back-to-coins" class="mat-h4">
+<div fxLayout="column" fxLayoutGap="80px" fxLayoutGap.lt-md="50px">
+    <section class="mat-h4">
         <span class="clickable coins-view-link"
             [routerLink]="['/']">{{'coin-overview.coins' | translate}}</span>&nbsp;{{tokenData?.name}}
     </section>
 
-    <section fxLayout="row" fxLayout.lt-sm="column" fxFlex>
-        <div fxLayout="column" fxLayoutGap="100px" fxFlex="30">
+    <!-- Token symbol + Price -->
+    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" fxFlex>
+        <div fxFlex="30">
             <div *ngIf="tokenData">
                 <img [src]="tokenData.image.small" class="coin-logo" [alt]="tokenData.name">
                 <span class="mat-display-1">{{tokenData.name}}</span>
@@ -15,9 +16,29 @@
                 <ngx-skeleton-loader appearance="circle" [theme]="{width:'45px', height:'45px'}"></ngx-skeleton-loader>
                 <ngx-skeleton-loader [theme]="{width:'140px', height:'30px'}"></ngx-skeleton-loader>
             </div>
+        </div>
 
-            <!-- LINKS -->
-            <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" class="mat-h4 links">
+        <div fxFlex="70">
+            <div class="coin-price" *ngIf="tokenData">
+                <span class="mat-display-1">
+                    {{tokenData.market_data.current_price.usd | currency:'USD':'symbol-narrow':'1.2-6'}}
+                </span>
+                <span class="coin-percentage mat-h1"
+                    [ngStyle]="{'color': tokenData.market_data.price_change_percentage_24h > 0 ? '#009e73' : 'red'}">
+                    ({{tokenData.market_data.price_change_percentage_24h | number:'1.2-2'}}%)
+                </span>
+            </div>
+            <div *ngIf="!tokenData">
+                <ngx-skeleton-loader [theme]="{width:'200px', height:'30px'}"></ngx-skeleton-loader>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links + Info Table -->
+    <section fxLayout="row" fxLayout.lt-md="column" fxFlex>
+        <div fxFlex="30">
+            <!-- Links desktop -->
+            <div fxHide.lt-md fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" class="mat-h4 links">
                 <div>
                     <mat-icon id="rank-icon">bar_chart</mat-icon>
                     <span id="rank-number">Rank {{tokenData?.market_cap_rank}}</span>
@@ -41,72 +62,136 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Links mobile -->
+            <div fxShow.lt-md fxHide fxLayout="column" fxLayoutGap="10px" class="mat-h4 links">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-icon id="rank-icon">bar_chart</mat-icon>
+                    <span id="rank-number">Rank {{tokenData?.market_cap_rank}}</span>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between">
+                    <div>
+                        <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank" color="primary"
+                            [disabled]="tokenData?.links.homepage.leng=== 0">
+                            <mat-icon>link</mat-icon>Website
+                        </a>
+                    </div>
+                    <div>
+                        <a mat-stroked-button href="{{tokenData?.links.repos_url.github[0]}}" target="_blank"
+                            color="primary" [disabled]="tokenData?.links.repos_url.github.leng=== 0">
+                            <mat-icon>code</mat-icon>Github
+                        </a>
+                    </div>
+                    <div>
+                        <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank" color="primary"
+                            [disabled]="!tokenData?.links.subreddit_url">
+                            <mat-icon>share</mat-icon>Reddit
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- PRICE & % -->
-        <div fxLayout="column" fxLayoutGap="100px" fxFlex="70">
-            <div class="coin-price" *ngIf="tokenData">
-                <span class="mat-display-1">
-                    {{tokenData.market_data.current_price.usd | currency:'USD':'symbol-narrow':'1.2-6'}}
-                </span>
-                <span class="coin-percentage mat-h1"
-                    [ngStyle]="{'color': tokenData.market_data.price_change_percentage_24h > 0 ? '#009e73' : 'red'}">
-                    ({{tokenData.market_data.price_change_percentage_24h | number:'1.2-2'}}%)
-                </span>
-            </div>
-            <div *ngIf="!tokenData">
-                <ngx-skeleton-loader [theme]="{width:'200px', height:'30px'}"></ngx-skeleton-loader>
-            </div>
-
-            <!-- Table -->
-            <div>
-                <mat-table [dataSource]="dataSource" class="mat-elevation-z1">
-                    <ng-container matColumnDef="market_cap">
-                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.market_cap' | translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element?.market_cap.usd | currency}}
-                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+        <div fxFlex="70">
+            <!-- Info card desktop -->
+            <mat-card fxHide.lt-lg>
+                <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <h2 class="mat-h3">{{'coin-overview.table.market_cap' | translate}}</h2>
+                        <h3>
+                            {{tokenData?.market_data.market_cap.usd | currency}}
+                            <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
                             </ngx-skeleton-loader>
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total_volume">
-                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.volume' | translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element?.total_volume.usd | currency}}
-                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                        </h3>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <h2>{{'coin-overview.table.volume' | translate}}</h2>
+                        <h3>
+                            {{tokenData?.market_data.total_volume.usd | currency}}
+                            <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
                             </ngx-skeleton-loader>
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="circulating_supply">
-                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.circulating_supply' | translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element?.circulating_supply | number:'1.0-0'}}
+                        </h3>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <h2>{{'coin-overview.table.circulating_supply' | translate}}</h2>
+                        <h3>
+                            {{tokenData?.market_data.circulating_supply | number:'1.0-0'}}
                             {{tokenData?.symbol | uppercase}}
-                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                            <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
                             </ngx-skeleton-loader>
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="max_supply">
-                        <mat-header-cell *matHeaderCellDef>{{'coin-overview.table.max_supply' | translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            {{element?.max_supply | number:'1.0-0'}}
-                            {{tokenData?.symbol | uppercase}}
-                            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
+                        </h3>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <h2>{{'coin-overview.table.max_supply' | translate}}</h2>
+                        <h3>
+                            {{tokenData?.market_data.max_supply | number:'1.0-0'}} {{tokenData?.symbol | uppercase}}
+                            <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
                             </ngx-skeleton-loader>
-                        </mat-cell>
-                    </ng-container>
+                        </h3>
+                    </div>
+                </mat-card-content>
+            </mat-card>
 
-                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                </mat-table>
+            <!-- Info card mobile -->
+            <div fxShow.lt-lg fxHide fxLayout="column" fxLayoutGap="5px">
+                <div fxLayoutGap="5px" fxLayout="row">
+                    <mat-card fxFlex="50">
+                        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+                            <h2>{{'coin-overview.table.market_cap' | translate}}</h2>
+                            <h3>
+                                {{tokenData?.market_data.market_cap.usd | currency}}
+                                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
+                                </ngx-skeleton-loader>
+                            </h3>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card fxFlex="50">
+                        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+                            <h2>{{'coin-overview.table.volume' | translate}}</h2>
+                            <h3>
+                                {{tokenData?.market_data.total_volume.usd | currency}}
+                                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
+                                </ngx-skeleton-loader>
+                            </h3>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+                <div fxShow.lt-lg fxHide fxLayoutGap="5px" fxLayout="row">
+                    <mat-card fxFlex="50">
+                        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+                            <h2>{{'coin-overview.table.circulating_supply' | translate}}</h2>
+                            <h3>
+                                {{tokenData?.market_data.circulating_supply | number:'1.0-0'}}
+                                {{tokenData?.symbol | uppercase}}
+                                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
+                                </ngx-skeleton-loader>
+                            </h3>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card fxFlex="50">
+                        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+                            <h2>{{'coin-overview.table.max_supply' | translate}}</h2>
+                            <h3>
+                                {{tokenData?.market_data.max_supply | number:'1.0-0'}}
+                                {{tokenData?.symbol | uppercase}}
+                                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
+                                </ngx-skeleton-loader>
+                            </h3>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
             </div>
         </div>
     </section>
 
-    <div id="chart-container" [chart]="chart"></div>
+
+
+
+
+    <!-- Chart -->
+    <section>
+        <div id="chart-container" [chart]="chart"></div>
+    </section>
 
 </div>

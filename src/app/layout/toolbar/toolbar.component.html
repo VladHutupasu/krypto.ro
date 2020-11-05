@@ -1,8 +1,13 @@
 <mat-toolbar>
     <mat-toolbar-row fxLayout="row" fxLayoutGap="20px" style="color: aliceblue;">
-        <img [routerLink]="['/']" class="logo clickable" src="assets/images/logo/logo-white-150x150.png" alt="home-logo">
-        <a mat-button matTooltip="Coming soon" aria-label="Top winners" fxHide.lt-sm>Top winners&nbsp;<mat-icon>emoji_events</mat-icon></a>
-        <a mat-button matTooltip="Coming soon" aria-label="Top winners" fxHide.lt-sm>Top losers&nbsp;<mat-icon>trending_down</mat-icon></a>
+        <a href="">
+            <img [routerLink]="['/']" class="logo clickable" src="assets/images/logo/logo-white-150x64.png"
+                alt="home-logo">
+        </a>
+        <a mat-button matTooltip="Coming soon" aria-label="Top winners"
+            fxHide.lt-md>{{'toolbar.top_winners' | translate}}&nbsp;<mat-icon>emoji_events</mat-icon></a>
+        <a mat-button matTooltip="Coming soon" aria-label="Top winners"
+            fxHide.lt-md>{{'toolbar.top_losers' | translate}}&nbsp;<mat-icon>trending_down</mat-icon></a>
         <div fxFlex fxLayoutAlign="flex-end" fxLayoutGap="20px">
             <form [formGroup]="form" fxHide.lt-sm>
                 <mat-form-field appearance="outline" class="search-box">

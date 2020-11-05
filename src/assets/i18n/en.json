@@ -22,6 +22,10 @@
       "total_market_cap": "Total market cap"
     }
   },
+  "toolbar": {
+    "top_winners": "Top winners",
+    "top_losers": "Top losers"
+  },
   "coin-overview": {
     "coins": "Coins > ",
     "table": {

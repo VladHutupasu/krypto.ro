@@ -2,8 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { CryptoApiService } from "src/app/services/crypto-api.service";
 import { tap } from "rxjs/operators";
-import { MatTableDataSource } from "@angular/material/table";
-import { MarketQuote } from "src/app/models/market-quote";
 import { CurrencyPipe, DatePipe } from "@angular/common";
 import { StockChart } from "angular-highcharts";
 
@@ -16,15 +14,6 @@ export class CoinOverviewComponent implements OnInit {
   token: string;
   tokenData: any;
   readonly skeletonSize = { width: "100px", height: "15px" };
-
-  // Table
-  displayedColumns: string[] = [
-    "market_cap",
-    "total_volume",
-    "circulating_supply",
-    "max_supply",
-  ];
-  dataSource = new MatTableDataSource(new Array<MarketQuote>(1));
 
   // Chart
   chart: StockChart;
@@ -50,8 +39,7 @@ export class CoinOverviewComponent implements OnInit {
   private fetchCoinInformationAndRenderChart() {
     this.cryptoAPI.getSingleInfoCoin(this.token).subscribe((result) => {
       this.tokenData = result;
-      this.dataSource.data = [result.market_data];
-      console.log("Coin info", result);
+      console.log("Coin info", this.tokenData);
     });
 
     this.cryptoAPI
@@ -81,14 +69,26 @@ export class CoinOverviewComponent implements OnInit {
         new Date(result.total_volumes[i][0]),
         result.total_volumes[i][1],
       ]);
+      //TODO: http://localhost:4200/coins/nasdacoin
+      //https://vladhutupasu.github.io/krypto.ro/coins/cosmos
+      // if (i != result.prices.length - 1) {
+      //   let date1 = new Date(result.prices[i][0]);
+      //   let date2 = new Date(result.prices[i + 1][0]);
+      //   let diffTime = date2.getTime() - date1.getTime();
+      //   console.log(diffTime + " milliseconds");
+      //   if (diffTime != 86400000 ){
+      //     console.error("Found difference of more than 1 day ",i);
+      //   }
+      // }
     }
-    
+
     this.chart = new StockChart({
       rangeSelector: {
-        selected: 5,
+        selected: 1,
       },
       yAxis: [
         {
+          opposite: false,
           labels: {
             align: "left",
           },
@@ -98,8 +98,10 @@ export class CoinOverviewComponent implements OnInit {
           },
         },
         {
+          opposite: false,
           labels: {
             align: "left",
+            enabled: false,
           },
           top: "80%",
           height: "20%",
@@ -110,10 +112,11 @@ export class CoinOverviewComponent implements OnInit {
       xAxis: {
         type: "datetime",
       },
+      //TODO: not shared when trying to lookup 3m
       tooltip: {
         split: false,
         shared: true,
-        followPointer: true,
+        followPointer: true
       },
       series: [
         {
@@ -142,7 +145,10 @@ export class CoinOverviewComponent implements OnInit {
       },
       chart: {
         backgroundColor: "#f7f6f4",
-        height: "550px",
+        height: "450px",
+        spacingLeft: 30,
+        spacingRight: 30,
+        zoomType: "x"
       },
     });
   }

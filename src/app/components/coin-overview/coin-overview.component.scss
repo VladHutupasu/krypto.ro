@@ -1,10 +1,13 @@
 .mat-card {
   color: black;
   background: rgba(0, 0, 0, 0.04);
-  width: 100%;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  .mat-card-content > h2 {
+    text-align: center;
+  }
 }
 
 .coin-logo {
@@ -12,10 +15,6 @@
   margin-right: 5px;
   height: 45px;
   width: 45px;
-}
-
-#back-to-coins {
-  margin-bottom: 50px;
 }
 
 #rank-icon {

@@ -22,6 +22,10 @@
       "total_market_cap": "Piața capitală"
     }
   },
+  "toolbar": {
+    "top_winners": "Top câștigători",
+    "top_losers": "Top pierzători"
+  },
   "coin-overview": {
     "coins": "Monede > ",
     "table":{
