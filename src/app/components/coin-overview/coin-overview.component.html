@@ -1,11 +1,11 @@
-<div fxLayout="column" fxLayoutGap="80px" fxLayoutGap.lt-md="50px">
-    <section class="mat-h4">
+<div fxLayout="column" fxLayoutGap="80px" fxLayoutGap.lt-md="50px" fxFlex>
+    <section class="mat-h4" fxFlex>
         <span class="clickable coins-view-link"
             [routerLink]="['/']">{{'coin-overview.coins' | translate}}</span>&nbsp;{{tokenData?.name}}
     </section>
 
     <!-- Token symbol + Price -->
-    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" fxFlex>
+    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" fxLayoutGap.lt-md="10px" fxFlex>
         <div fxFlex="30">
             <div *ngIf="tokenData">
                 <img [src]="tokenData.image.small" class="coin-logo" [alt]="tokenData.name">
@@ -185,12 +185,8 @@
         </div>
     </section>
 
-
-
-
-
     <!-- Chart -->
-    <section>
+    <section fxFlex>
         <div id="chart-container" [chart]="chart"></div>
     </section>
 

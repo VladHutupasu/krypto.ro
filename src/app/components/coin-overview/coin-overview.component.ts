@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { CryptoApiService } from "src/app/services/crypto-api.service";
+import { CryptoApiService } from "src/app/_services/crypto-api.service";
 import { tap } from "rxjs/operators";
 import { CurrencyPipe, DatePipe } from "@angular/common";
 import { StockChart } from "angular-highcharts";

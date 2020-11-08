@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CryptoApiService } from 'src/app/services/crypto-api.service';
-import { DataSharingService } from 'src/app/services/data-sharing.service';
-import { MarketQuote } from 'src/app/models/market-quote';
+import { CryptoApiService } from 'src/app/_services/crypto-api.service';
+import { DataSharingService } from 'src/app/_services/data-sharing.service';
+import { MarketQuote } from 'src/app/_models/market-quote';
 
 @Component({
   selector: 'app-crypto-info-bar',

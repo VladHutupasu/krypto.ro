@@ -2,8 +2,7 @@
 Todo:
   ✔ Clickable graph @done(20-10-13 11:56)
   ✔ Minimize width table columns on mobile @done(20-10-13 11:56)
-  ☐ Links on header
-  ☐ Material css for ej2?
-  ☐ Scrollbar range
-  ☐ Mobile coin overview
+  ☐ Bugs flex boxes mobile
+  ☐ Add Unsubscriber extend service
+  ☐ Lazy load modules	
 

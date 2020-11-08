@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, tap } from 'rxjs/operators';
-import { CoinDescription } from 'src/app/models/coin-description';
-import { Language } from 'src/app/models/language';
-import { CryptoApiService } from 'src/app/services/crypto-api.service';
+import { CoinDescription } from 'src/app/_models/coin-description';
+import { Language } from 'src/app/_models/language';
+import { CryptoApiService } from 'src/app/_services/crypto-api.service';
 import { go } from 'fuzzysort';
 
 @Component({

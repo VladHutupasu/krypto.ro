@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { CryptoApiService } from 'src/app/services/crypto-api.service';
+import { CryptoApiService } from 'src/app/_services/crypto-api.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MarketQuote } from 'src/app/models/market-quote';
+import { MarketQuote } from 'src/app/_models/market-quote';
 import { tap } from 'rxjs/operators';
-import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { DataSharingService } from 'src/app/_services/data-sharing.service';
 
 @Component({
   selector: 'app-coins-table',
