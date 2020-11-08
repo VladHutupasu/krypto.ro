@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "krypto-468b0": {
+      "hosting": {
+        "krypto": [
+          "krypto-468b0"
+        ]
+      }
+    }
+  }
+}
