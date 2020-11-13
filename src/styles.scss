@@ -12,11 +12,11 @@ body {
 //----------------------------------*\
 // Fonts
 //----------------------------------*/
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
 @import "~@angular/material/theming";
 $custom-typography: mat-typography-config(
-  $font-family: "Roboto Slab",
+  $font-family: "Poppins",
 );
 @include mat-core($custom-typography);
 //----------------------------------*\
@@ -56,6 +56,10 @@ button {
   padding: 30px 20px 50px 20px;
   position: relative;
   min-height: 100%;
+}
+
+.grayed-out {
+  color: rgba(39, 52, 64, 0.5);
 }
 
 // MOBILE

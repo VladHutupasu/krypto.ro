@@ -7,11 +7,28 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
+.mat-card-content > p {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.mat-card-content > p.crypto-info-numbers {
+  color: #1f3852;
+  font-weight: 600;
+  font-size: 16px;
+}
+
 mat-icon {
   vertical-align: sub;
   &.stats {
     color: #1f3852;
   }
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .market-info-cards {
@@ -22,9 +39,9 @@ mat-icon {
   padding: 5px 20px 5px 20px;
 }
 
-.crypto-info-numbers {
-  color: #1f3852;
+.mat-card-content.trends-info-card a {
   font-weight: 500;
+  font-size: 16px;
 }
 
 .trend-up {

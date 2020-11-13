@@ -10,11 +10,11 @@
   }
 }
 
-.coin-logo {
-  vertical-align: bottom;
-  margin-right: 5px;
-  height: 45px;
-  width: 45px;
+#coin-name {
+  font-size: 34px;
+  font-weight: 400;
+  margin: 0px;
+  outline: 0px;
 }
 
 #rank-icon {
@@ -38,6 +38,7 @@
 
 .coins-view-link {
   color: #3586ff;
+  text-decoration: none;
 }
 
 .coin-info-header {
@@ -48,17 +49,9 @@
   padding-left: 5px;
 }
 
-.coin-price {
-  padding-top: 10px;
-}
-
 .links .mat-icon {
   vertical-align: middle;
   margin-right: 5px;
-}
-
-.grayed-out {
-  color: rgba(39, 52, 64, 0.5);
 }
 
 mat-table {
@@ -78,6 +71,12 @@ mat-cell {
   font-weight: 500;
 }
 
-#chart-container {
-  margin-top: 50px;
+@media only screen and (max-width: 959px) {
+  #coin-name {
+    text-align: center;
+  }
+
+  #coin-logo {
+    margin-right: 0px;
+  }
 }

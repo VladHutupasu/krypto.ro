@@ -1,24 +1,28 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CoinOverviewComponent } from './components/coin-overview/coin-overview.component';
-import { CoinsTableComponent } from './components/coins-table/coins-table.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
-
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { CoinOverviewComponent } from "./components/coin-overview/coin-overview.component";
+import { HomePageComponent } from "./components/home-page/home-page.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomePageComponent
+    path: "",
+    pathMatch: "full",
+    component: HomePageComponent,
   },
+  // {
+  //   path: 'coins/:coin',
+  //   component: CoinOverviewComponent
+  // },
   {
-    path: 'coins/:coin',
-    component: CoinOverviewComponent
+    path: "coins",
+    loadChildren: () => import('./components/coin-overview/coin-overview.module').then(m => m.CoinOverviewModule)
   },
-  { path: '**', redirectTo: '' }
+  { path: "**", component: PageNotFoundComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

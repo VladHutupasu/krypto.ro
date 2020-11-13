@@ -1,6 +1,9 @@
-.logo {
-  cursor: pointer;
-  padding-top: 10px;
+.home-page-logo {
+  width: 123px;
+  height: 39px;
+  background-image: url("../../../assets/images/logo/logo-white.png");
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .flag {
@@ -31,7 +34,7 @@
   color: white;
 }
 
-.mobile-search {
+#mobile-search-container {
   background-color: #f7f6f4;
   position: fixed;
   top: 0px;
@@ -42,9 +45,14 @@
   width: 100%;
 }
 
-.mobile-search-box {
+#mobile-search-box {
   background-color: #1f3852;
   display: flex;
+}
+
+#mobile-search-button {
+  bottom: 2.5px !important;
+  vertical-align: super;
 }
 
 //input outline color
@@ -53,7 +61,9 @@
 }
 
 //mat-input focused color
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+::ng-deep
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-thick {
   color: #2e92e8 !important;
 }
 

@@ -4,32 +4,48 @@ mat-table {
   overflow: auto;
 }
 
+.coin-logo {
+  width: 25px;
+  height: auto;
+}
+
 .mat-cell {
-  font-size: 13px;
+  font-size: 13.5px;
+  font-weight: 500;
   padding-right: 15px;
+  color: #333333;
+}
+
+.mat-cell > a {
+  text-decoration: none;
+  color: black;
 }
 
 .mat-header-cell {
+  font-weight: 600;
   padding-right: 15px;
-}
-
-.coin-logo {
-  margin-right: 5px;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
 }
 
 .mat-column-market_cap_rank {
   max-width: 50px;
 }
 
-.mat-column-name {
-  font-weight: 500;
+.mat-column-market_cap {
+  // min-width: fit-content;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .mat-column-current_price {
-  font-weight: 500;
+  max-width: 110px;
+  font-weight: 600;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-column-price_change_percentage_24h {
+  max-width: 110px;
+  font-weight: 600;
   display: flex;
   justify-content: flex-end;
 }
@@ -40,11 +56,6 @@ mat-table {
 }
 
 .mat-column-circulating_supply {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.mat-column-price_change_percentage_24h {
   display: flex;
   justify-content: flex-end;
 }
@@ -76,10 +87,9 @@ mat-table {
 }
 
 .table-title {
-  margin: 30px 0px 20px 0px;
-  @media only screen and (max-width: 800px) {
-    font-size: 25px;
-  }
+  font-size: 24px;
+  font-weight: 600;
+  margin: 30px 0px 0px 0px;
 }
 
 .paginator {
@@ -96,20 +106,51 @@ mat-table {
   display: inline-block;
   font-size: 10px;
   background: rgb(239, 242, 245);
-  margin-right: 5px;
   color: rgb(88, 102, 126);
 }
 
 @media only screen and (max-width: 800px) {
+  .mat-row,
+  .mat-header-row {
+    min-width: 950px;
+    width: 100%;
+  }
+
+  .table-title {
+    font-size: 20px;
+  }
+
   .mat-column-current_price {
     max-width: 80px;
+  }
+
+  .mat-column-name {
+    max-width: 120px;
+    padding-left: 15px;
+    padding-right: 5px;
+
+    ngx-skeleton-loader {
+      padding-right: 15px;
+    }
   }
 
   .mat-column-market_cap {
     max-width: 130px;
   }
 
+  .mat-column-total_volume {
+    max-width: 130px;
+  }
+
+  .mat-column-circulating_supply {
+    max-width: 160px;
+  }
+
   .mat-column-price_change_percentage_24h {
-    max-width: 100px;
+    max-width: 80px;
+  }
+
+  .mat-column-sparkline7d {
+    max-width: 150px;
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "krypto",
-  "short_name": "krypto",
+  "name": "Krypto.ro",
+  "short_name": "Krypto.ro",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
@@ -8,16 +8,14 @@
   "start_url": "./",
   "icons": [
     {
-      "src": "assets/icons/icon-192x192.png",
+      "src": "assets/icons/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "assets/icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable any"
-    }
+      "type": "image/png"
+  },
+  {
+      "src": "assets/icons/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+  }
   ]
 }

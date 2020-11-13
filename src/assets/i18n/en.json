@@ -1,6 +1,7 @@
 {
   "home": {
     "title": "Top 100 Coins by Market Capitalization",
+    "subtitle": "The global crypto market cap is ${{total_market_cap}}, a {{market_cap_change_percentage_24h}}% change in since yesterday",
     "search": "Search",
     "table": {
       "rank": "#",
@@ -9,7 +10,7 @@
       "price": "Price",
       "volume": "Volume",
       "circulating_supply": "Circulating supply",
-      "change_24h": "Change % (24h)",
+      "change_24h": "24h",
       "graph_7d": "Graph (7d)",
       "paginator": {
         "next_100": "Next 100",
@@ -32,7 +33,7 @@
       "market_cap": "Market cap",
       "volume": "Volume 24h",
       "circulating_supply": "Circulating supply",
-      "max_supply": "Max supply"
+      "total_supply": "Total supply"
     }
   }
 }

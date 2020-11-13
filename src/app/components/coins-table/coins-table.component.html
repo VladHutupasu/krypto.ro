@@ -1,4 +1,13 @@
-<h1 class="center-text table-title mat-display-1">{{'home.title' | translate}}</h1>
+<section>
+    <h1 class="table-title mat-display-1">{{'home.title' | translate}}</h1>
+    <h3 class="grayed-out">
+        <ng-container *ngIf="globalMarketInfo">
+            {{'home.subtitle' | translate: {total_market_cap : (globalMarketInfo?.total_market_cap.usd | numberSuffix:2), market_cap_change_percentage_24h : (globalMarketInfo?.market_cap_change_percentage_24h_usd | number:'1.2-2')} }}
+        </ng-container>
+        <ngx-skeleton-loader *ngIf="!globalMarketInfo" [theme]="{ width: '900px', height: '16px' }">
+        </ngx-skeleton-loader>
+    </h3>
+</section>
 
 <div class="paginator" fxLayout="row">
     <div fxLayoutAlign="start">
@@ -26,11 +35,14 @@
 
         <ng-container matColumnDef="name" sticky>
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.name' | translate}} </mat-header-cell>
-            <mat-cell [hidden]="!element" *matCellDef="let element" class="clickable"
-                [routerLink]="['/coins',element?.id]">
-                <small *ngIf="screenWidth < 800" class="rank-tooltip">{{element?.market_cap_rank}}</small>
-                <img *ngIf="element" [src]="element?.image" class="coin-logo" [alt]="element?.name">
-                {{element?.name}}
+            <mat-cell [hidden]="!element" *matCellDef="let element">
+                <a *ngIf="element" [routerLink]="['/coins',element?.id]" fxLayout="row" fxLayoutGap="5px"
+                    fxLayoutAlign="center center">
+                    <small *ngIf="screenWidth < 800" class="rank-tooltip"
+                        fxLayout="column">{{element.market_cap_rank}}</small>
+                    <img [src]="getSmallImage(element.image)" class="coin-logo" [alt]="element.name" fxLayout="column">
+                    <span fxLayout="column">{{element.name}}</span>
+                </a>
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>
@@ -39,7 +51,7 @@
         <ng-container matColumnDef="market_cap">
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.market_cap' | translate}}
             </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.market_cap | currency}}
+            <mat-cell *matCellDef="let element"> {{element?.market_cap | currency:'USD':'symbol':'1.0-0'}}
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>
@@ -57,7 +69,7 @@
         <ng-container matColumnDef="total_volume">
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.volume' | translate}}
             </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.total_volume | currency}}
+            <mat-cell *matCellDef="let element"> {{element?.total_volume | currency:'USD':'symbol':'1.0-0'}}
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>
@@ -78,8 +90,13 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
                 [ngStyle]="{'color': element?.price_change_percentage_24h > 0 ? 'green' : 'red'}">
-                {{element?.price_change_percentage_24h | number:'1.2-2'}}
-                <ng-container *ngIf="element">%</ng-container>
+                <ng-container *ngIf="element">
+                    <mat-icon *ngIf="element?.price_change_percentage_24h > 0">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="element?.price_change_percentage_24h < 0">arrow_drop_down</mat-icon>
+                    <p style="margin: 0;">
+                        {{element?.price_change_percentage_24h | absolute | number:'1.2-2'}}%
+                    </p>
+                </ng-container>
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>
@@ -87,10 +104,12 @@
 
         <ng-container matColumnDef="sparkline7d">
             <mat-header-cell *matHeaderCellDef> {{'home.table.graph_7d' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="clickable" [routerLink]="['/coins',element?.id]">
-                <ngx-trend [data]="element?.sparkline_in_7d.price" [autoDraw]="true" [autoDrawDuration]="1000"
-                    autoDrawEasing="ease-in" [smooth]="true" radius="25" strokeWidth="1.5" stroke="#a68b23"
-                    strokeLinecap="round"></ngx-trend>
+            <mat-cell *matCellDef="let element">
+                <a [routerLink]="['/coins',element?.id]">
+                    <ngx-trend [data]="element?.sparkline_in_7d.price" strokeWidth="2" smooth="true" radius="10"
+                        strokeLinecap="round" [stroke]="element?.price_change_percentage_24h > 0 ? 'green' : 'red'">
+                    </ngx-trend>
+                </a>
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>

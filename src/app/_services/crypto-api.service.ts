@@ -21,12 +21,8 @@ export class CryptoApiService {
   }
 
   getCoinChart(coin: string, currency: string, days: string) {
-    return this.http.get<any>(`${this.baseUrl}/coins/${coin}/market_chart?vs_currency=${currency}&days=${days}`);
+    return this.http.get<any>(`${this.baseUrl}/coins/${coin}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`);
   }
-
-  // getTop100(): Observable<MarketQuote[]> {
-  //   return this.http.get<MarketQuote[]>(`${this.baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h`);
-  // }
 
   getMultiInfoCoin(coins: string[]): Observable<MarketQuote[]> {
     return this.http.get<MarketQuote[]>(`${this.baseUrl}/coins/markets?vs_currency=usd&ids=${coins}&order=market_cap_desc&per_page=100&page=1&sparkline=false`);

@@ -1,6 +1,7 @@
 {
   "home": {
     "title": "Top 100 criptomonezi în funcție de piața capitală",
+    "subtitle": "Piața capitală globală a cryptomonedelor este de ${{total_market_cap}}, o schimbare de {{market_cap_change_percentage_24h}}% față de ziua precedentă",
     "search": "Caută",
     "table": {
       "rank": "#",
@@ -9,7 +10,7 @@
       "price": "Preț",
       "volume": "Volum",
       "circulating_supply": "Aprovizionare",
-      "change_24h": "Variație % (24h)",
+      "change_24h": "24h",
       "graph_7d": "Grafic (7d)",
       "paginator": {
         "next_100": "Următoarele 100",
@@ -32,7 +33,7 @@
       "market_cap": "Piață capitală",
       "volume": "Volum 24h",
       "circulating_supply": "Aprovizionare",
-      "max_supply": "Aprovizionare maximă"
+      "total_supply": "Aprovizionare totală"
     }
   }
 }

@@ -1,16 +1,16 @@
-<div fxLayout="column" fxLayoutGap="80px" fxLayoutGap.lt-md="50px" fxFlex>
-    <section class="mat-h4" fxFlex>
-        <span class="clickable coins-view-link"
-            [routerLink]="['/']">{{'coin-overview.coins' | translate}}</span>&nbsp;{{tokenData?.name}}
+<div fxLayout="column" fxLayoutGap="80px" fxLayoutGap.lt-md="50px">
+    <!-- Link back to home page -->
+    <section class="mat-h4">
+        <a class="clickable coins-view-link"
+        routerLink="/">{{'coin-overview.coins' | translate}}</a>&nbsp;{{tokenData?.name}}
     </section>
 
     <!-- Token symbol + Price -->
-    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" fxLayoutGap.lt-md="10px" fxFlex>
-        <div fxFlex="30">
-            <div *ngIf="tokenData">
-                <img [src]="tokenData.image.small" class="coin-logo" [alt]="tokenData.name">
-                <span class="mat-display-1">{{tokenData.name}}</span>
-                <span class="mat-h3 grayed-out">&nbsp;({{tokenData.symbol | uppercase}})</span>
+    <section fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" fxLayoutGap.lt-md="15px">
+        <div fxFlex.gt-sm="calc(33% - 15px)">
+            <div *ngIf="tokenData" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="5px">
+                <img [src]="tokenData.image.small" [alt]="tokenData.name">
+                <h1 id="coin-name">{{tokenData.name}}&nbsp;<span class="mat-h3 grayed-out">({{tokenData.symbol | uppercase}})</span></h1>
             </div>
             <div *ngIf="!tokenData">
                 <ngx-skeleton-loader appearance="circle" [theme]="{width:'45px', height:'45px'}"></ngx-skeleton-loader>
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div fxFlex="70">
+        <div fxFlex.gt-sm="calc(67% - 15px)">
             <div class="coin-price" *ngIf="tokenData">
                 <span class="mat-display-1">
                     {{tokenData.market_data.current_price.usd | currency:'USD':'symbol-narrow':'1.2-6'}}
@@ -35,8 +35,8 @@
     </section>
 
     <!-- Links + Info Table -->
-    <section fxLayout="row" fxLayout.lt-md="column" fxFlex>
-        <div fxFlex="30">
+    <section fxLayout="row" fxLayout.lt-md="column">
+        <div fxFlex.gt-sm="33">
             <!-- Links desktop -->
             <div fxHide.lt-md fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" class="mat-h4 links">
                 <div>
@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div fxFlex="70">
+        <div fxFlex.gt-sm="63">
             <!-- Info card desktop -->
             <mat-card fxHide.lt-lg>
                 <mat-card-content fxLayout="row" fxLayoutAlign="space-around center">
@@ -122,9 +122,9 @@
                         </h3>
                     </div>
                     <div fxLayout="column" fxLayoutAlign="center center">
-                        <h2>{{'coin-overview.table.max_supply' | translate}}</h2>
+                        <h2>{{'coin-overview.table.total_supply' | translate}}</h2>
                         <h3>
-                            {{tokenData?.market_data.max_supply | number:'1.0-0'}} {{tokenData?.symbol | uppercase}}
+                            {{tokenData?.market_data.total_supply | number:'1.0-0'}} {{tokenData?.symbol | uppercase}}
                             <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
                             </ngx-skeleton-loader>
                         </h3>
@@ -135,7 +135,7 @@
             <!-- Info card mobile -->
             <div fxShow.lt-lg fxHide fxLayout="column" fxLayoutGap="5px">
                 <div fxLayoutGap="5px" fxLayout="row">
-                    <mat-card fxFlex="50">
+                    <mat-card fxFlex="calc(50% - 5px)">
                         <mat-card-content fxLayout="column" fxLayoutAlign="center center">
                             <h2>{{'coin-overview.table.market_cap' | translate}}</h2>
                             <h3>
@@ -145,7 +145,7 @@
                             </h3>
                         </mat-card-content>
                     </mat-card>
-                    <mat-card fxFlex="50">
+                    <mat-card fxFlex="calc(50% - 5px)">
                         <mat-card-content fxLayout="column" fxLayoutAlign="center center">
                             <h2>{{'coin-overview.table.volume' | translate}}</h2>
                             <h3>
@@ -157,8 +157,8 @@
                     </mat-card>
                 </div>
 
-                <div fxShow.lt-lg fxHide fxLayoutGap="5px" fxLayout="row">
-                    <mat-card fxFlex="50">
+                <div fxLayoutGap="5px" fxLayout="row">
+                    <mat-card fxFlex="calc(50% - 5px)">
                         <mat-card-content fxLayout="column" fxLayoutAlign="center center">
                             <h2>{{'coin-overview.table.circulating_supply' | translate}}</h2>
                             <h3>
@@ -169,11 +169,11 @@
                             </h3>
                         </mat-card-content>
                     </mat-card>
-                    <mat-card fxFlex="50">
+                    <mat-card fxFlex="calc(50% - 5px)">
                         <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-                            <h2>{{'coin-overview.table.max_supply' | translate}}</h2>
+                            <h2>{{'coin-overview.table.total_supply' | translate}}</h2>
                             <h3>
-                                {{tokenData?.market_data.max_supply | number:'1.0-0'}}
+                                {{tokenData?.market_data.total_supply | number:'1.0-0'}}
                                 {{tokenData?.symbol | uppercase}}
                                 <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize">
                                 </ngx-skeleton-loader>
@@ -186,7 +186,7 @@
     </section>
 
     <!-- Chart -->
-    <section fxFlex>
+    <section>
         <div id="chart-container" [chart]="chart"></div>
     </section>
 

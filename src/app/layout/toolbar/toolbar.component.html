@@ -1,8 +1,9 @@
 <mat-toolbar>
     <mat-toolbar-row fxLayout="row" fxLayoutGap="20px" style="color: aliceblue;">
-        <a href="">
-            <img [routerLink]="['/']" class="logo clickable" src="assets/images/logo/logo-white-150x64.png"
-                alt="home-logo">
+        <a [routerLink]="['/']">
+            <div class="home-page-logo"  alt="home-page-logo">
+
+            </div>
         </a>
         <a mat-button matTooltip="Coming soon" aria-label="Top winners"
             fxHide.lt-md>{{'toolbar.top_winners' | translate}}&nbsp;<mat-icon>emoji_events</mat-icon></a>
@@ -48,12 +49,12 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="mobile-search" *ngIf="showSearchBox">
-    <div class="mobile-search-box">
+<div id="mobile-search-container" *ngIf="showSearchBox">
+    <div id="mobile-search-box">
         <form [formGroup]="form" fxLayout="row" fxLayoutAlign="center center" fxFlex>
             <mat-form-field appearance="outline" fxFlex>
-                <input matInput formControlName="search" [matAutocomplete]="auto">
-                <button mat-flat-button matSuffix style="vertical-align: super;"
+                <input matInput formControlName="search" [matAutocomplete]="auto" style="font-size: 16px;">
+                <button id="mobile-search-button" mat-flat-button matSuffix
                     (click)="showSearchBox = false">Cancel</button>
             </mat-form-field>
         </form>

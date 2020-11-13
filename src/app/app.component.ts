@@ -10,10 +10,7 @@ declare let gtag: Function;
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  constructor(translate: TranslateService, private router: Router) {
-    translate.setDefaultLang("ro");
-    translate.use("ro");
-
+  constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         gtag("config", "G-VMF56FPCH9", {
