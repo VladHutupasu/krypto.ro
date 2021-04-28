@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CryptoInfoBarComponent } from './crypto-info-bar.component';
 
@@ -6,7 +6,7 @@ describe('CryptoInfoBarComponent', () => {
   let component: CryptoInfoBarComponent;
   let fixture: ComponentFixture<CryptoInfoBarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CryptoInfoBarComponent ]
     })
