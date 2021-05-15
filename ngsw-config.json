@@ -26,5 +26,32 @@
         ]
       }
     }
+  ],
+
+  "dataGroups": [
+    {
+      "name": "api-performance",
+      "urls": [
+        "https://api.coingecko.com/api/v3/coins/list",
+        "https://api.coingecko.com/api/v3/global"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "3d"
+      }
+    },
+    {
+      "name": "api-freshness",
+      "urls": [
+        "https://api.coingecko.com/api/v3/coins/markets"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 100,
+        "maxAge": "3d",
+        "timeout": "10s"
+      }
+    }
   ]
 }
