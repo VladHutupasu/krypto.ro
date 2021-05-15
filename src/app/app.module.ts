@@ -60,6 +60,7 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    translate.setDefaultLang("ro");
+    //TODO: check browser language
+    translate.setDefaultLang("en");
   }
 }
