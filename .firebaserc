@@ -7,5 +7,8 @@
         ]
       }
     }
+  },
+  "projects": {
+    "PROD": "krypto-468b0"
   }
 }

@@ -1,12 +1,12 @@
 .footer {
-  background-color: #1f3852;
+  background-color: var(--primary-color);
   height: 100px;
-  color: white;
+  color: #fff;
   font-weight: 400;
   bottom: 0;
 }
 
 .footer > a {
   text-decoration: none;
-  color: #FFFFFF;
+  color: #fff;
 }
