@@ -5,5 +5,5 @@
 ## Deployment
  firebase login:ci -> get $FIREBASE_TOKEN           
  npm version patch
- npm run build:staging 
+ ng build --prod
  firebase deploy --token $FIREBASE_TOKEN
