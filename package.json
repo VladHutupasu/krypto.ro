@@ -9,8 +9,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy-version": "npm version patch && ng deploy",
-    "gzip-linux": "rm -rf ./dist/*-gzip && gzipper --verbose --output-file-format [filename].[ext] ./dist/krypto ./dist/krypto-gzip",
-    "gzip": "rd ./dist/*-gzip && gzipper --verbose --output-file-format [filename].[ext] ./dist/krypto ./dist/krypto-gzip",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "private": true,
