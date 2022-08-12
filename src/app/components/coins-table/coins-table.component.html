@@ -11,13 +11,12 @@
 
 <div class="paginator" fxLayout="row">
     <div fxLayoutAlign="start">
-        <button [disabled]="loadingCoins" *ngIf="pageNumber !== 1" (click)="back100()" mat-stroked-button
-            color="primary">
+        <button [disabled]="loadingCoins" *ngIf="pageNumber !== 1" (click)="back100()" mat-stroked-button>
             <mat-icon>navigate_before</mat-icon>{{'home.table.paginator.back_100' | translate}}
         </button>
     </div>
     <div fxFlex fxLayoutAlign="flex-end">
-        <button [disabled]="loadingCoins" (click)="next100()" mat-stroked-button color="primary">
+        <button [disabled]="loadingCoins" (click)="next100()" mat-stroked-button>
             {{'home.table.paginator.next_100' | translate}}<mat-icon>navigate_next</mat-icon>
         </button>
     </div>
@@ -60,7 +59,7 @@
         <ng-container matColumnDef="current_price">
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.price' | translate}}
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" style="color:#2196f3"> {{element?.current_price | currency}}
+            <mat-cell *matCellDef="let element"> {{element?.current_price | currency}}
                 <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
                 </ngx-skeleton-loader>
             </mat-cell>

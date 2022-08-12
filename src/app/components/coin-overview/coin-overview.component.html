@@ -44,19 +44,19 @@
                     <span id="rank-number">Rank {{tokenData?.market_cap_rank}}</span>
                 </div>
                 <div>
-                    <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank" color="primary"
+                    <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank"
                         [disabled]="tokenData?.links.homepage.leng=== 0">
                         <mat-icon>link</mat-icon>Website
                     </a>
                 </div>
                 <div>
                     <a mat-stroked-button href="{{tokenData?.links.repos_url.github[0]}}" target="_blank"
-                        color="primary" [disabled]="tokenData?.links.repos_url.github.leng=== 0">
+                        [disabled]="tokenData?.links.repos_url.github.leng=== 0">
                         <mat-icon>code</mat-icon>Github
                     </a>
                 </div>
                 <div>
-                    <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank" color="primary"
+                    <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank"
                         [disabled]="!tokenData?.links.subreddit_url">
                         <mat-icon>share</mat-icon>Reddit
                     </a>
@@ -71,19 +71,19 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <div>
-                        <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank" color="primary"
+                        <a mat-stroked-button href="{{tokenData?.links.homepage[0]}}" target="_blank"
                             [disabled]="tokenData?.links.homepage.leng=== 0">
                             <mat-icon>link</mat-icon>Website
                         </a>
                     </div>
                     <div>
                         <a mat-stroked-button href="{{tokenData?.links.repos_url.github[0]}}" target="_blank"
-                            color="primary" [disabled]="tokenData?.links.repos_url.github.leng=== 0">
+                            [disabled]="tokenData?.links.repos_url.github.leng=== 0">
                             <mat-icon>code</mat-icon>Github
                         </a>
                     </div>
                     <div>
-                        <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank" color="primary"
+                        <a mat-stroked-button href="{{tokenData?.links.subreddit_url}}" target="_blank"
                             [disabled]="!tokenData?.links.subreddit_url">
                             <mat-icon>share</mat-icon>Reddit
                         </a>

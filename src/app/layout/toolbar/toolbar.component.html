@@ -1,14 +1,13 @@
 <mat-toolbar>
     <mat-toolbar-row fxLayout="row" fxLayoutGap="20px" style="color: aliceblue;">
         <div class="home-page-logo" [routerLink]="['/']">
-            <img src="../../../assets/images/logo/test.png" alt="home-page-logo">
+            <h1>Krypto.ro</h1>
         </div>
 
-
-        <a mat-button matTooltip="Coming soon" aria-label="Top winners"
-            fxHide.lt-md>{{'toolbar.top_winners' | translate}}&nbsp;<mat-icon>emoji_events</mat-icon></a>
-        <a mat-button matTooltip="Coming soon" aria-label="Top winners"
-            fxHide.lt-md>{{'toolbar.top_losers' | translate}}&nbsp;<mat-icon>trending_down</mat-icon></a>
+        <a mat-button matTooltip="Coming soon" aria-label="Top winners" fxHide.lt-md>{{'toolbar.top_winners' |
+            translate}}&nbsp;<mat-icon>emoji_events</mat-icon></a>
+        <a mat-button matTooltip="Coming soon" aria-label="Top winners" fxHide.lt-md>{{'toolbar.top_losers' |
+            translate}}&nbsp;<mat-icon>trending_down</mat-icon></a>
 
         <div fxFlex fxLayoutAlign="flex-end" fxLayoutGap="20px">
             <form [formGroup]="form" fxHide.lt-sm>

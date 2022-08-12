@@ -1,8 +1,10 @@
+@import 'styles/variables';
+
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
   height: 100%;
-  background-color: #f7f6f4;
+  background: linear-gradient(rgb(248, 250, 253) 0%, rgba(248, 250, 253, 0) 413px);
 }
 body {
   margin: 0;
@@ -13,24 +15,12 @@ body {
 // Fonts
 //----------------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-
 @import "~@angular/material/theming";
+
 $custom-typography: mat-typography-config(
   $font-family: "Poppins",
 );
 @include mat-core($custom-typography);
-//----------------------------------*\
-// Theme
-//----------------------------------*/
-$primary: mat-palette($mat-blue);
-$accent:  mat-palette($mat-deep-orange);
-$theme: mat-light-theme((
-  color: (
-    primary: $primary,
-    accent: $accent,
-  )
-));
-@include angular-material-theme($theme);
 
 //----------------------------------*\
 // Useful
@@ -38,6 +28,16 @@ $theme: mat-light-theme((
 
 button {
   outline: none;
+  border-radius: 8px;
+}
+
+button, .mat-button, .mat-flat-button {
+  color: #fff;
+  background-color: var(--secondary-color);
+}
+
+.mat-stroked-button {
+  color: var(--secondary-color);
 }
 
 .center-text {
