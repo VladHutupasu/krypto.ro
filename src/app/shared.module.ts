@@ -1,11 +1,11 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
-import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
-import { TrendModule } from "ngx-trend";
-import { MaterialModule } from "./material.module";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { TrendModule } from 'ngx-trend';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [],
@@ -17,7 +17,7 @@ import { MaterialModule } from "./material.module";
     TrendModule, // https://github.com/scttcper/ngx-trend
     MaterialModule,
     NgxSkeletonLoaderModule,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [],
   exports: [
@@ -27,7 +27,7 @@ import { MaterialModule } from "./material.module";
     TrendModule, // https://github.com/scttcper/ngx-trend
     MaterialModule,
     NgxSkeletonLoaderModule,
-    TranslateModule
-  ]
+    TranslateModule,
+  ],
 })
 export class SharedModule {}

@@ -1,78 +1,76 @@
-.home-page-logo {
-  cursor: pointer;
-}
-
-.flag {
-  margin-right: 5px;
-}
-
 .mat-toolbar {
-  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 70px;
+  background-color: var(--main-white);
 
   a.mat-button {
     background-color: var(--secondary-color);
   }
 }
 
-.search-box {
-  font-size: 12px;
+.home-page-logo {
+  cursor: pointer;
+  margin-right: 30px;
+
+  h1 {
+    font-size: 20px;
+  }
 }
 
-.coin-logo {
-  margin-right: 5px;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
-}
+// .search-box {
+//   font-size: 12px;
+// }
 
-.language-button {
-  color: white;
-  margin-right: 5px !important;
-}
+// .coin-logo {
+//   margin-right: 5px;
+//   width: 16px;
+//   height: 16px;
+//   vertical-align: middle;
+// }
 
-.search-button {
-  color: white;
-}
+// .search-button {
+//   color: white;
+// }
 
-#mobile-search-container {
-  background-color: #f7f6f4;
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  height: 100%;
-  z-index: 935;
-  overflow: scroll;
-  width: 100%;
-}
+// #mobile-search-container {
+//   background-color: #f7f6f4;
+//   position: fixed;
+//   top: 0px;
+//   right: 0px;
+//   height: 100%;
+//   z-index: 935;
+//   overflow: scroll;
+//   width: 100%;
+// }
 
-#mobile-search-box {
-  background-color: #1f3852;
-  display: flex;
-}
+// #mobile-search-box {
+//   background-color: #1f3852;
+//   display: flex;
+// }
 
-#mobile-search-button {
-  bottom: 2.5px !important;
-  vertical-align: super;
-}
+// #mobile-search-button {
+//   bottom: 2.5px !important;
+//   vertical-align: super;
+// }
 
-//input outline color
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: white !important;
-}
+// //input outline color
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+//   color: white !important;
+// }
 
-//mat-input focused color
-::ng-deep
-  .mat-form-field-appearance-outline.mat-focused
-  .mat-form-field-outline-thick {
-  color: #2e92e8 !important;
-}
+// //mat-input focused color
+// ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+//   color: #2e92e8 !important;
+// }
 
-/* input color class */
-::ng-deep input.mat-input-element {
-  color: white;
-}
+// /* input color class */
+// ::ng-deep input.mat-input-element {
+//   color: white;
+// }
 
-//input outline color
-::ng-deep .mat-form-field-wrapper {
-  padding: 0;
-}
+// //input outline color
+// ::ng-deep .mat-form-field-wrapper {
+//   padding: 0;
+// }

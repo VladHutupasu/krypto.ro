@@ -1,13 +1,12 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { CoinOverviewComponent } from "./components/coin-overview/coin-overview.component";
-import { HomePageComponent } from "./components/home-page/home-page.component";
-import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
-    path: "",
-    pathMatch: "full",
+    path: '',
+    pathMatch: 'full',
     component: HomePageComponent,
   },
   // {
@@ -15,14 +14,14 @@ const routes: Routes = [
   //   component: CoinOverviewComponent
   // },
   {
-    path: "coins",
-    loadChildren: () => import('./components/coin-overview/coin-overview.module').then(m => m.CoinOverviewModule)
+    path: 'coins',
+    loadChildren: () => import('./components/coin-overview/coin-overview.module').then(m => m.CoinOverviewModule),
   },
-  { path: "**", component: PageNotFoundComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

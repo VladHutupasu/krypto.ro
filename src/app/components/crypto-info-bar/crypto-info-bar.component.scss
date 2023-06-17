@@ -1,29 +1,22 @@
-.mat-card {
-  color: black;
-  background: #fff;
-  width: 100%;
-  padding: 5px;
-  border-radius: 8px;
-  box-shadow: rgb(88 102 126 / 8%) 0px 4px 24px, rgb(88 102 126 / 12%) 0px 1px 2px;
+.market-info-cards {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+
+  @media only screen and (max-width: 800px) {
+    flex-direction: column;
+  }
+
+  .crypto-info-numbers {
+    color: rgb(15, 21, 27);
+    font-weight: 600;
+  }
+
 }
 
-.mat-card-content > p {
-  font-weight: 500;
-  font-size: 15px;
-  margin-bottom: 5px;
-}
-
-.mat-card-content > p.crypto-info-numbers {
-  color: #1f3852;
-  font-weight: 600;
-  font-size: 16px;
-}
 
 mat-icon {
   vertical-align: sub;
-  &.stats {
-    color: #1f3852;
-  }
 }
 
 a {

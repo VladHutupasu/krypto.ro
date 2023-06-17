@@ -1,120 +1,145 @@
-<section>
-    <h1 class="table-title mat-display-1">{{'home.title' | translate}}</h1>
-    <h3 class="grayed-out">
+<mat-card>
+  <mat-card-content>
+    <section>
+      <h1 class="table-title mat-display-1">{{ 'home.title' | translate }}</h1>
+      <h3>
         <ng-container *ngIf="globalMarketInfo">
-            {{'home.subtitle' | translate: {total_market_cap : (globalMarketInfo?.total_market_cap.usd | numberSuffix:2), market_cap_change_percentage_24h : (globalMarketInfo?.market_cap_change_percentage_24h_usd | number:'1.2-2')} }}
+          {{
+            'home.subtitle'
+              | translate
+                : {
+                    total_market_cap: (globalMarketInfo?.total_market_cap.usd | numberSuffix : 2),
+                    market_cap_change_percentage_24h:
+                      (globalMarketInfo?.market_cap_change_percentage_24h_usd | number : '1.2-2')
+                  }
+          }}
         </ng-container>
         <ngx-skeleton-loader *ngIf="!globalMarketInfo" [theme]="{ width: '900px', height: '16px' }">
         </ngx-skeleton-loader>
-    </h3>
-</section>
+      </h3>
+    </section>
 
-<div class="paginator" fxLayout="row">
-    <div fxLayoutAlign="start">
-        <button [disabled]="loadingCoins" *ngIf="pageNumber !== 1" (click)="back100()" mat-stroked-button>
-            <mat-icon>navigate_before</mat-icon>{{'home.table.paginator.back_100' | translate}}
-        </button>
-    </div>
-    <div fxFlex fxLayoutAlign="flex-end">
-        <button [disabled]="loadingCoins" (click)="next100()" mat-stroked-button>
-            {{'home.table.paginator.next_100' | translate}}<mat-icon>navigate_next</mat-icon>
-        </button>
-    </div>
-</div>
+    <!-- Pagination -->
+    <mat-card-header>
+      <button [disabled]="loadingCoins" *ngIf="pageNumber !== 1" (click)="back100()" mat-stroked-button>
+        <mat-icon class="material-icons-outlined">navigate_before</mat-icon
+        >{{ 'home.table.paginator.back_100' | translate }}
+      </button>
+      <button [disabled]="loadingCoins" (click)="next100()" mat-stroked-button>
+        {{ 'home.table.paginator.next_100' | translate
+        }}<mat-icon class="material-icons-outlined">navigate_next</mat-icon>
+      </button>
+    </mat-card-header>
 
-<div>
-    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <div>
+      <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="market_cap_rank" sticky>
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.rank' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element?.market_cap_rank}}
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'home.table.rank' | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            >{{ element?.market_cap_rank }}
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="name" sticky>
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.name' | translate}} </mat-header-cell>
-            <mat-cell [hidden]="!element" *matCellDef="let element">
-                <a *ngIf="element" [routerLink]="['/coins',element?.id]" fxLayout="row" fxLayoutGap="5px"
-                    fxLayoutAlign="center center">
-                    <small *ngIf="screenWidth < 800" class="rank-tooltip"
-                        fxLayout="column">{{element.market_cap_rank}}</small>
-                    <img [src]="getSmallImage(element.image)" class="coin-logo" [alt]="element.name" fxLayout="column">
-                    <span fxLayout="column">{{element.name}}</span>
-                </a>
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'home.table.name' | translate }} </mat-header-cell>
+          <mat-cell [hidden]="!element" *matCellDef="let element">
+            <a
+              *ngIf="element"
+              [routerLink]="['/coins', element?.id]"
+              fxLayout="row"
+              fxLayoutGap="5px"
+              fxLayoutAlign="center center"
+            >
+              <small *ngIf="screenWidth < 800" class="rank-tooltip" fxLayout="column">{{
+                element.market_cap_rank
+              }}</small>
+              <img [src]="getSmallImage(element.image)" class="coin-logo" [alt]="element.name" fxLayout="column" />
+              <span fxLayout="column">{{ element.name }}</span>
+            </a>
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="market_cap">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.market_cap' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.market_cap | currency:'USD':'symbol':'1.0-0'}}
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'home.table.market_cap' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.market_cap | numberSuffix : 2 }}
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="current_price">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.price' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.current_price | currency}}
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'home.table.price' | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.current_price | currency }}
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="total_volume">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.volume' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.total_volume | currency:'USD':'symbol':'1.0-0'}}
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'home.table.volume' | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.total_volume | numberSuffix : 2 }}
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="circulating_supply">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.circulating_supply' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element?.circulating_supply  | number:'1.0-0'}}
-                {{element?.symbol | uppercase}}
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'home.table.circulating_supply' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.circulating_supply | numberSuffix : 2 }}
+            <span style="font-weight: 600">&nbsp;{{ element?.symbol | uppercase }}</span>
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="price_change_percentage_24h">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'home.table.change_24h' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-                [ngStyle]="{'color': element?.price_change_percentage_24h > 0 ? 'green' : 'red'}">
-                <ng-container *ngIf="element">
-                    <mat-icon *ngIf="element?.price_change_percentage_24h > 0">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="element?.price_change_percentage_24h < 0">arrow_drop_down</mat-icon>
-                    <p style="margin: 0;">
-                        {{element?.price_change_percentage_24h | absolute | number:'1.2-2'}}%
-                    </p>
-                </ng-container>
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'home.table.change_24h' | translate }}
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [ngStyle]="{ color: element?.price_change_percentage_24h > 0 ? 'green' : 'red' }"
+          >
+            <ng-container *ngIf="element">
+              <mat-icon class="material-icons-outlined" *ngIf="element?.price_change_percentage_24h > 0"
+                >arrow_drop_up</mat-icon
+              >
+              <mat-icon class="material-icons-outlined" *ngIf="element?.price_change_percentage_24h < 0"
+                >arrow_drop_down</mat-icon
+              >
+              <p style="margin: 0">{{ element?.price_change_percentage_24h | absolute | number : '1.2-2' }}%</p>
+            </ng-container>
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="sparkline7d">
-            <mat-header-cell *matHeaderCellDef> {{'home.table.graph_7d' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <a [routerLink]="['/coins',element?.id]">
-                    <ngx-trend [data]="element?.sparkline_in_7d.price" strokeWidth="2" smooth="true" radius="10"
-                        strokeLinecap="round" [stroke]="element?.price_change_percentage_24h > 0 ? 'green' : 'red'">
-                    </ngx-trend>
-                </a>
-                <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize">
-                </ngx-skeleton-loader>
-            </mat-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'home.table.graph_7d' | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a [routerLink]="['/coins', element?.id]">
+              <ngx-trend
+                [data]="element?.sparkline_in_7d.price"
+                [strokeWidth]="2"
+                [smooth]="true"
+                [radius]="10"
+                [stroke]="element?.price_change_percentage_24h > 0 ? 'green' : 'red'"
+                strokeLinecap="round"
+              >
+              </ngx-trend>
+            </a>
+            <ngx-skeleton-loader *ngIf="!element" [theme]="skeletonSize"> </ngx-skeleton-loader>
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="getDisplayedColumns(); sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: getDisplayedColumns();"></mat-row>
-    </mat-table>
-</div>
+        <mat-row *matRowDef="let row; columns: getDisplayedColumns()"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

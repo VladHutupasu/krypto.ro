@@ -1,6 +1,6 @@
-export class CoinDescription {
-    id: string;
-    symbol: string;
-    name: string;
-    image: string;
+export interface CoinDescription {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
 }

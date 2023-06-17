@@ -48,3 +48,4 @@ debug.log
 
 # Firebase
 /.firebase
+.angular/cache
