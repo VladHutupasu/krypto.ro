@@ -146,8 +146,8 @@
 </mat-card> -->
 
 <section class="pb-10">
-  <h1 class="font-bold text-2xl">{{ 'home.title' | translate }}</h1>
-  <h3 class="font-semibold text-xl" [ngClass]="globalMarketInfo ? '' : 'skeleton'">
+  <h1 class="font-bold text-lg sm:text-2xl text-justify">{{ 'home.title' | translate }}</h1>
+  <h3 class="font-semibold text-base sm:text-xl text-gray-500" [ngClass]="globalMarketInfo ? '' : 'skeleton'">
     {{
       'home.subtitle'
         | translate
@@ -180,7 +180,7 @@
       <tr *ngFor="let element of testData">
         <th class="w-0.5 sm:w-1" [ngClass]="element ? '' : 'skeleton'">{{ element?.market_cap_rank }}</th>
         <td [ngClass]="element ? '' : 'skeleton'">
-          <div>
+          <div [routerLink]="['/coins', element.id]">
             <img class="inline w-5 sm:w-6 mr-1" [src]="element?.image" />
             <span class="font-medium">{{ element?.name }}</span>
           </div>

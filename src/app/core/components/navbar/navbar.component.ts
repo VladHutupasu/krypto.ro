@@ -1,105 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { CoinDescription } from '@core/models/coin-description';
-import { Language } from '@core/models/language';
-import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CoinSearchResult } from '@core/models/coin-search-result';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-// import { go } from "fuzzysort";
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-navbar',
-    templateUrl: './navbar.component.html',
-    standalone: true,
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
+  standalone: true,
+  imports: [CommonModule, RouterLink],
 })
 export class NavbarComponent implements OnInit {
-  subscriptions = new SubscriptionsContainer();
+  searchUpdates$ = new Subject<string>();
+  searchResults: CoinSearchResult[] = [];
+  loading = false;
 
-  selectedLanguage!: Language;
-  showSearchBox: boolean = false;
-  languages: Language[] = [
-    {
-      id: 'en',
-      name: 'English',
-      flag: 'en20.png',
-    },
-    {
-      id: 'ro',
-      name: 'Română',
-      flag: 'ro20.png',
-    },
-  ];
-  form!: FormGroup;
-  searchResults$!: Observable<CoinDescription[]>;
-  allCoins: CoinDescription[] = [];
+  @ViewChild('languageSelector') languageSelector!: ElementRef;
+  @ViewChild('searchBarSelector') searchBarSelector!: ElementRef;
 
-  constructor(
-    private translate: TranslateService,
-    private formBuilder: FormBuilder,
-    private cryptoAPI: CryptoApiService
-  ) {}
+  constructor(private translate: TranslateService, private cryptoAPI: CryptoApiService) {}
 
   ngOnInit(): void {
-    this.initializeSearchForm();
-    // this.listenToSearchChanges();
-    // this.fetchCoinsList();
+    this.initializeSearch();
   }
 
-  fetchCoinsList() {
-    this.cryptoAPI.getCoinsList().pipe(
-      tap(coins => {
-        console.log('Coins list - ', coins);
-        this.allCoins = coins;
-      })
-    );
+  setLanguage(lang: string): void {
+    this.translate.use(lang);
+    this.languageSelector.nativeElement.removeAttribute('open');
   }
 
-  setLanguage(lang: Language): void {
-    this.selectedLanguage = lang;
-    this.translate.use(lang.id);
+  initializeSearch() {
+    this.searchUpdates$
+      .pipe(
+        debounceTime(600),
+        distinctUntilChanged(),
+        tap(() => (this.loading = true))
+      )
+      .subscribe(value => {
+        console.log('Searching...', value);
+        this.searchBarSelector.nativeElement.setAttribute('open', '');
+        this.cryptoAPI.searchCoin(value).subscribe(results => {
+          this.searchResults = results.slice(0, 5);
+          this.loading = false;
+        });
+      });
   }
 
-  initializeSearchForm() {
-    this.form = this.formBuilder.group({
-      search: [''],
-    });
+  search($searchEvent: Event) {
+    const searchTerm = ($searchEvent.target as HTMLInputElement).value;
+    this.searchUpdates$.next(searchTerm);
   }
 
-  // setLogoForEachResult(searchResults: CoinDescription[]) {
-  //   this.subscriptions.add = this.cryptoAPI.getMultiInfoCoin(searchResults.map(coin => coin.id)).subscribe(response => {
-  //     response.forEach(info => {
-  //       searchResults.find(element => element.id === info.id).image = info.image;
-  //     });
-  //   });
-  // }
-
-  //@TODO fix searching
-  fuzzySearch(searchWord: string) {
-    // return go(searchWord, this.allCoins, {
-    //   keys: ["symbol", "name"],
-    //   limit: 5,
-    //   allowTypo: false,
-    //   threshold: -10000,
-    // });
-  }
-
-  // listenToSearchChanges() {
-  //   this.searchResults$ = this.form.valueChanges.pipe(
-  //     debounceTime(400),
-  //     map(form => form.search),
-  //     distinctUntilChanged(),
-  //     map(searchWord => {
-  //       let searchResults = this.fuzzySearch(searchWord).map(result => result.obj);
-  //       //TODO: I dont really like this approach
-  //       this.setLogoForEachResult(searchResults);
-  //       return searchResults;
-  //     })
-  //   );
-  // }
-
-  ngOnDestroy(): void {
-    this.subscriptions.dispose();
+  // @TODO Fix dropdown when clicking outside of element
+  closeDropdown() {
+    this.searchBarSelector.nativeElement.removeAttribute('open');
   }
 }

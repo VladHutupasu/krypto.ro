@@ -40,7 +40,7 @@
       </svg>
     </div>
     <div class="stat-title">{{ 'home.stats.cryptocurrencies' | translate }}</div>
-    <div class="stat-value">{{ globalInfo?.active_cryptocurrencies | numberSuffix : 2 }}+</div>
+    <div class="stat-value text-xl sm:text-4xl">{{ globalInfo?.active_cryptocurrencies | numberSuffix : 2 }}+</div>
   </div>
 
   <div class="stat">
@@ -61,7 +61,7 @@
       </svg>
     </div>
     <div class="stat-title">{{ 'home.stats.markets' | translate }}</div>
-    <div class="stat-value">{{ globalInfo?.markets | numberSuffix }}+</div>
+    <div class="stat-value text-xl sm:text-4xl">{{ globalInfo?.markets | numberSuffix }}+</div>
   </div>
 
   <div class="stat">
@@ -82,6 +82,6 @@
       </svg>
     </div>
     <div class="stat-title">{{ 'home.stats.total_market_cap' | translate }}</div>
-    <div class="stat-value">{{ globalInfo?.total_market_cap.usd | numberSuffix : 1 }}+</div>
+    <div class="stat-value text-xl sm:text-4xl">{{ globalInfo?.total_market_cap.usd | numberSuffix : 1 }}+</div>
   </div>
 </div>

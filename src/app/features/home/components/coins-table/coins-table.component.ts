@@ -1,29 +1,31 @@
+import { CurrencyPipe, DecimalPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AbsolutePipe } from '@core/pipes/absolute-number.pipe';
+import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { DataSharingService } from '@core/services/data-sharing.service';
-import { tap } from 'rxjs/operators';
-import { testData } from './table-data-test';
-import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
-import { AbsolutePipe } from '@core/pipes/absolute-number.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { TrendModule } from 'ngx-trend';
-import { NgClass, NgFor, NgIf, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { tap } from 'rxjs/operators';
+import { testData } from './table-data-test';
 
 @Component({
-    selector: 'app-coins-table',
-    templateUrl: './coins-table.component.html',
-    standalone: true,
-    imports: [
-        NgClass,
-        NgFor,
-        NgIf,
-        TrendModule,
-        DecimalPipe,
-        CurrencyPipe,
-        TranslateModule,
-        AbsolutePipe,
-        NumberSuffixPipe,
-    ],
+  selector: 'app-coins-table',
+  templateUrl: './coins-table.component.html',
+  standalone: true,
+  imports: [
+    NgClass,
+    NgFor,
+    NgIf,
+    TrendModule,
+    DecimalPipe,
+    CurrencyPipe,
+    TranslateModule,
+    AbsolutePipe,
+    NumberSuffixPipe,
+    RouterLink,
+  ],
 })
 export class CoinsTableComponent implements OnInit {
   displayedColumns!: string[];

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { CoinSearchResult } from '@core/models/coin-search-result';
+import { Observable, map } from 'rxjs';
 import { MarketQuote } from '../models/market-quote';
 
 @Injectable({
@@ -45,5 +46,9 @@ export class CryptoApiService {
     return this.http.get<MarketQuote[]>(
       `${this.baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNumber}&sparkline=true&price_change_percentage=24h`
     );
+  }
+
+  searchCoin(coin: string): Observable<CoinSearchResult[]> {
+    return this.http.get<any>(`${this.baseUrl}/search?query=${coin}`).pipe(map(value => value.coins));
   }
 }
