@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'numberSuffix',
+    name: 'numberSuffix',
+    standalone: true,
 })
 export class NumberSuffixPipe implements PipeTransform {
   transform(input: any, args?: any): any {

@@ -1,24 +1,27 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgIf, NgStyle, UpperCasePipe, DecimalPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
 import { CryptoApiService } from '@core/services/crypto-api.service';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexDataLabels,
-  ApexFill,
-  ApexMarkers,
-  ApexTooltip,
-  ApexXAxis,
-  ApexYAxis,
-} from 'ng-apexcharts';
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexMarkers, ApexTooltip, ApexXAxis, ApexYAxis, NgApexchartsModule } from 'ng-apexcharts';
 import { tap } from 'rxjs/operators';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-coin-overview',
-  templateUrl: './coin-overview.component.html',
+    selector: 'app-coin-overview',
+    templateUrl: './coin-overview.component.html',
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        NgStyle,
+        NgApexchartsModule,
+        UpperCasePipe,
+        DecimalPipe,
+        CurrencyPipe,
+        TranslateModule,
+    ],
 })
 export class CoinOverviewComponent implements OnInit, OnDestroy {
   subscriptions = new SubscriptionsContainer();

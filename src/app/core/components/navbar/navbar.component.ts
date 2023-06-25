@@ -10,8 +10,9 @@ import { tap } from 'rxjs/operators';
 // import { go } from "fuzzysort";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    standalone: true,
 })
 export class NavbarComponent implements OnInit {
   subscriptions = new SubscriptionsContainer();

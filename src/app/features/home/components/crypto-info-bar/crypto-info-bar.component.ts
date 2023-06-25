@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MarketQuote } from '@core/models/market-quote';
+import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
 import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { DataSharingService } from '@core/services/data-sharing.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-crypto-info-bar',
   templateUrl: './crypto-info-bar.component.html',
+  standalone: true,
+  imports: [TranslateModule, NumberSuffixPipe],
 })
 export class CryptoInfoBarComponent implements OnInit, OnDestroy {
   subscriptions = new SubscriptionsContainer();

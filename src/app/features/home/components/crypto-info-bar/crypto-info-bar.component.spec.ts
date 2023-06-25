@@ -8,8 +8,8 @@ describe('CryptoInfoBarComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CryptoInfoBarComponent ]
-    })
+    imports: [CryptoInfoBarComponent]
+})
     .compileComponents();
   }));
 

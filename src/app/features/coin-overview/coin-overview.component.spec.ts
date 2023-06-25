@@ -8,8 +8,8 @@ describe('CoinOverviewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoinOverviewComponent ]
-    })
+    imports: [CoinOverviewComponent]
+})
     .compileComponents();
   }));
 
