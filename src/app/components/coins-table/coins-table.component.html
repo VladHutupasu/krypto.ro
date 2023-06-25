@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
   <mat-card-content>
     <section>
       <h1 class="table-title mat-display-1">{{ 'home.title' | translate }}</h1>
@@ -17,10 +17,10 @@
         <ngx-skeleton-loader *ngIf="!globalMarketInfo" [theme]="{ width: '900px', height: '16px' }">
         </ngx-skeleton-loader>
       </h3>
-    </section>
+    </section> -->
 
-    <!-- Pagination -->
-    <mat-card-header>
+<!-- Pagination -->
+<!-- <mat-card-header>
       <button [disabled]="loadingCoins" *ngIf="pageNumber !== 1" (click)="back100()" mat-stroked-button>
         <mat-icon class="material-icons-outlined">navigate_before</mat-icon
         >{{ 'home.table.paginator.back_100' | translate }}
@@ -29,9 +29,10 @@
         {{ 'home.table.paginator.next_100' | translate
         }}<mat-icon class="material-icons-outlined">navigate_next</mat-icon>
       </button>
-    </mat-card-header>
+    </mat-card-header> -->
 
-    <div>
+<!-- TABLE -->
+<!-- <div>
       <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="market_cap_rank" sticky>
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'home.table.rank' | translate }} </mat-header-cell>
@@ -140,6 +141,115 @@
         <mat-header-row *matHeaderRowDef="getDisplayedColumns(); sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: getDisplayedColumns()"></mat-row>
       </mat-table>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </div> -->
+<!-- </mat-card-content>
+</mat-card> -->
+
+<section class="pb-10">
+  <h1 class="font-bold text-2xl">{{ 'home.title' | translate }}</h1>
+  <h3 class="font-semibold text-xl" [ngClass]="globalMarketInfo ? '' : 'skeleton'">
+    {{
+      'home.subtitle'
+        | translate
+          : {
+              total_market_cap: (globalMarketInfo?.total_market_cap.usd | numberSuffix : 2),
+              market_cap_change_percentage_24h:
+                (globalMarketInfo?.market_cap_change_percentage_24h_usd | number : '1.2-2')
+            }
+    }}
+  </h3>
+</section>
+
+<!-- NEW TABLE -->
+<div class="overflow-x-auto">
+  <table class="table table-sm sm:table-md">
+    <thead>
+      <tr>
+        <th>{{ 'home.table.rank' | translate }}</th>
+        <th>{{ 'home.table.name' | translate }}</th>
+        <th>{{ 'home.table.market_cap' | translate }}</th>
+        <th>{{ 'home.table.price' | translate }}</th>
+        <th>{{ 'home.table.volume' | translate }}</th>
+        <th>{{ 'home.table.circulating_supply' | translate }}</th>
+        <th>{{ 'home.table.change_24h' | translate }}</th>
+        <th>{{ 'home.table.graph_7d' | translate }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let element of testData">
+        <th class="w-0.5 sm:w-1" [ngClass]="element ? '' : 'skeleton'">{{ element?.market_cap_rank }}</th>
+        <td [ngClass]="element ? '' : 'skeleton'">
+          <div>
+            <img class="inline w-5 sm:w-6 mr-1" [src]="element?.image" />
+            <span class="font-medium">{{ element?.name }}</span>
+          </div>
+        </td>
+        <td>{{ element?.market_cap | numberSuffix : 2 }}</td>
+        <td class="font-medium">{{ element?.current_price | currency }}</td>
+        <td>{{ element?.total_volume | numberSuffix : 2 }}</td>
+        <td>
+          {{ element?.circulating_supply | numberSuffix : 2 }}
+          <!-- @TODO fix this -->
+          <progress
+            *ngIf="element.max_supply"
+            class="progress progress-primary max-w-full block"
+            [value]="(element.max_supply / element.circulating_supply) * 10"
+            max="100"
+          ></progress>
+        </td>
+        <td class="font-medium">
+          <ng-container
+            *ngIf="element && element.price_change_percentage_24h > 0; then upArrow; else downArrow"
+          ></ng-container>
+
+          <ng-template #upArrow>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 stroke-green-500 inline"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+              />
+            </svg>
+          </ng-template>
+          <ng-template #downArrow>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 stroke-red-500 inline"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6L9 12.75l4.286-4.286a11.948 11.948 0 014.306 6.43l.776 2.898m0 0l3.182-5.511m-3.182 5.51l-5.511-3.181"
+              />
+            </svg>
+          </ng-template>
+          {{ element.price_change_percentage_24h | absolute | number : '1.2-2' }}%
+        </td>
+        <td class="w-40">
+          <ngx-trend
+            *ngIf="element"
+            [data]="element.sparkline_in_7d.price"
+            [strokeWidth]="2"
+            [smooth]="true"
+            [radius]="10"
+            [stroke]="element.price_change_percentage_24h > 0 ? 'green' : 'red'"
+            strokeLinecap="round"
+          >
+          </ngx-trend>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

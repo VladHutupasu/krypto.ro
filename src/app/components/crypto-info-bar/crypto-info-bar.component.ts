@@ -7,7 +7,6 @@ import { DataSharingService } from 'src/app/_services/data-sharing.service';
 @Component({
   selector: 'app-crypto-info-bar',
   templateUrl: './crypto-info-bar.component.html',
-  styleUrls: ['./crypto-info-bar.component.scss'],
 })
 export class CryptoInfoBarComponent implements OnInit, OnDestroy {
   subscriptions = new SubscriptionsContainer();

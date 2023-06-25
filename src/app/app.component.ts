@@ -1,19 +1,20 @@
-import { Component } from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { themeChange } from 'theme-change';
 
 declare let gtag: Function;
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   constructor(private router: Router) {
-    this.router.events.subscribe((event) => {
+    themeChange();
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        gtag("config", "G-VMF56FPCH9", {
+        gtag('config', 'G-VMF56FPCH9', {
           page_path: event.urlAfterRedirects,
         });
       }
@@ -25,7 +26,7 @@ export class AppComponent {
   }
 
   private scrollToTopOnRouteChange() {
-    this.router.events.subscribe((evt) => {
+    this.router.events.subscribe(evt => {
       if (!(evt instanceof NavigationEnd)) {
         return;
       }

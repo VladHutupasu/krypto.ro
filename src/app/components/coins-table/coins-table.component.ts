@@ -1,32 +1,27 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { MarketQuote } from 'src/app/_models/market-quote';
 import { CryptoApiService } from 'src/app/_services/crypto-api.service';
 import { DataSharingService } from 'src/app/_services/data-sharing.service';
+import { testData } from './table-data-test';
 
 @Component({
   selector: 'app-coins-table',
   templateUrl: './coins-table.component.html',
-  styleUrls: ['./coins-table.component.scss'],
 })
 export class CoinsTableComponent implements OnInit {
   displayedColumns!: string[];
   globalMarketInfo: any;
-  dataSource = new MatTableDataSource(new Array<MarketQuote>(100)); // create empty array such that we get the loading effect
   pageNumber = 1;
   loadingCoins: boolean = true;
   screenWidth!: number;
   readonly skeletonSize = { width: '100px', height: '15px' };
-
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  testData = testData;
 
   constructor(private cryptoAPI: CryptoApiService, private dataSharingService: DataSharingService) {}
 
   ngOnInit(): void {
     this.setScreenWidth();
-    this.fetchTop100Coins();
+    // this.fetchTop100Coins();
     this.getGlobalMarketInfo();
   }
 
@@ -41,8 +36,8 @@ export class CoinsTableComponent implements OnInit {
         tap(coins => {
           console.log('Top 100', coins);
           this.dataSharingService.sendTop100Coins(coins.slice());
-          this.dataSource.data = coins;
-          this.dataSource.sort = this.sort;
+          // this.dataSource.data = coins;
+          // this.dataSource.sort = this.sort;
           this.loadingCoins = false;
         })
       )
@@ -80,13 +75,13 @@ export class CoinsTableComponent implements OnInit {
 
   next100() {
     console.log('Next100 ->>>');
-    this.dataSource.data = new Array<MarketQuote>(100);
+    // this.dataSource.data = new Array<MarketQuote>(100);
     this.loadingCoins = true;
     this.cryptoAPI
       .get100Coins(++this.pageNumber)
       .pipe(
         tap(coins => {
-          this.dataSource.data = coins;
+          // this.dataSource.data = coins;
           this.loadingCoins = false;
         })
       )
@@ -95,13 +90,13 @@ export class CoinsTableComponent implements OnInit {
 
   back100() {
     console.log('Back100 ->>>');
-    this.dataSource.data = new Array<MarketQuote>(100);
+    // this.dataSource.data = new Array<MarketQuote>(100);
     this.loadingCoins = true;
     this.cryptoAPI
       .get100Coins(--this.pageNumber)
       .pipe(
         tap(coins => {
-          this.dataSource.data = coins;
+          // this.dataSource.data = coins;
           this.loadingCoins = false;
         })
       )

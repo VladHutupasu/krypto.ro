@@ -15,8 +15,8 @@
         </h1>
       </div>
       <div *ngIf="!tokenData">
-        <ngx-skeleton-loader appearance="circle" [theme]="{ width: '45px', height: '45px' }"></ngx-skeleton-loader>
-        <ngx-skeleton-loader [theme]="{ width: '140px', height: '30px' }"></ngx-skeleton-loader>
+        <!-- @TODO fix this with circle -->
+        <div class="skeleton"></div>
       </div>
     </div>
 
@@ -129,8 +129,8 @@
   </section> -->
 
   <!-- Chart -->
-  <mat-card>
-    <mat-card-content>
+  <div class="card">
+    <div class="card-body">
       <div class="coin-price-2" *ngIf="tokenData">
         <span>
           {{ tokenData.market_data.current_price.usd | currency : 'USD' : 'symbol-narrow' : '1.2-6' }}
@@ -154,6 +154,6 @@
         [tooltip]="tooltip"
         [autoUpdateSeries]="true"
       ></apx-chart>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </div>
