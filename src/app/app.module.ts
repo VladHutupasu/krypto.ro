@@ -7,16 +7,17 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from 'src/environments/environment';
-import { AbsolutePipe } from './_helpers/absolute-number.pipe';
-import { NumberSuffixPipe } from './_helpers/number-suffix.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CoinsTableComponent } from './components/coins-table/coins-table.component';
-import { CryptoInfoBarComponent } from './components/crypto-info-bar/crypto-info-bar.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
-import { FooterComponent } from './layout/footer/footer.component';
-import { ToolbarComponent } from './layout/toolbar/toolbar.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+import { FooterComponent } from '@core/components/footer/footer.component';
+import { NavbarComponent } from '@core/components/navbar/navbar.component';
+import { PageNotFoundComponent } from '@core/components/page-not-found/page-not-found.component';
+import { AbsolutePipe } from '@core/pipes/absolute-number.pipe';
+import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
+import { CoinsTableComponent } from './features/home/components/coins-table/coins-table.component';
+import { CryptoInfoBarComponent } from './features/home/components/crypto-info-bar/crypto-info-bar.component';
+import { HomePageComponent } from './features/home/home-page.component';
 import { SharedModule } from './shared.module';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -26,7 +27,7 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
+    NavbarComponent,
     CoinsTableComponent,
     CryptoInfoBarComponent,
     FooterComponent,

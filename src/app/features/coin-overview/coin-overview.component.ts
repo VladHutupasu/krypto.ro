@@ -2,6 +2,8 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
+import { CryptoApiService } from '@core/services/crypto-api.service';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -13,8 +15,6 @@ import {
   ApexYAxis,
 } from 'ng-apexcharts';
 import { tap } from 'rxjs/operators';
-import { SubscriptionsContainer } from 'src/app/_helpers/subscriptions-container';
-import { CryptoApiService } from 'src/app/_services/crypto-api.service';
 
 @Component({
   selector: 'app-coin-overview',

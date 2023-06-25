@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SubscriptionsContainer } from 'src/app/_helpers/subscriptions-container';
-import { MarketQuote } from 'src/app/_models/market-quote';
-import { CryptoApiService } from 'src/app/_services/crypto-api.service';
-import { DataSharingService } from 'src/app/_services/data-sharing.service';
+import { MarketQuote } from '@core/models/market-quote';
+import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
+import { CryptoApiService } from '@core/services/crypto-api.service';
+import { DataSharingService } from '@core/services/data-sharing.service';
 
 @Component({
   selector: 'app-crypto-info-bar',

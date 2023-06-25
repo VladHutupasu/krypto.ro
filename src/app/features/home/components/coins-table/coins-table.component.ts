@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { CryptoApiService } from '@core/services/crypto-api.service';
+import { DataSharingService } from '@core/services/data-sharing.service';
 import { tap } from 'rxjs/operators';
-import { CryptoApiService } from 'src/app/_services/crypto-api.service';
-import { DataSharingService } from 'src/app/_services/data-sharing.service';
 import { testData } from './table-data-test';
 
 @Component({

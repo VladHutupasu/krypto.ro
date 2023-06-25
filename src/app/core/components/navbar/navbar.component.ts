@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CoinDescription } from '@core/models/coin-description';
+import { Language } from '@core/models/language';
+import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
+import { CryptoApiService } from '@core/services/crypto-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CoinDescription } from 'src/app/_models/coin-description';
-import { Language } from 'src/app/_models/language';
-import { CryptoApiService } from 'src/app/_services/crypto-api.service';
 // import { go } from "fuzzysort";
-import { SubscriptionsContainer } from 'src/app/_helpers/subscriptions-container';
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
 })
-export class ToolbarComponent implements OnInit {
+export class NavbarComponent implements OnInit {
   subscriptions = new SubscriptionsContainer();
 
   selectedLanguage!: Language;

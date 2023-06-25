@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { MarketQuote } from '../_models/market-quote';
+import { MarketQuote } from '../models/market-quote';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataSharingService {
-
   public top100Coins = new Subject<MarketQuote[]>();
   public globalMarketInfo = new Subject<any>();
 
