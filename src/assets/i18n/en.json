@@ -13,8 +13,11 @@
       "change_24h": "24h",
       "graph_7d": "Graph (7d)",
       "paginator": {
-        "next_100": "Next 100",
-        "back_100": "Back 100"
+        "next_100": "Next page",
+        "back_100": "Previous page",
+        "next": "Next",
+        "previous": "Previous",
+        "page": "Page"
       }
     },
     "stats": {

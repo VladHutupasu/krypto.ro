@@ -1,19 +1,18 @@
 import { CurrencyPipe, DecimalPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { MarketQuote } from '@core/models/market-quote';
 import { AbsolutePipe } from '@core/pipes/absolute-number.pipe';
 import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
-import { CryptoApiService } from '@core/services/crypto-api.service';
-import { DataSharingService } from '@core/services/data-sharing.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TrendModule } from 'ngx-trend';
-import { tap } from 'rxjs/operators';
-import { testData } from './table-data-test';
+import { GlobalCoinData } from '../../models/global-coin-data.model';
 
 @Component({
   selector: 'app-coins-table',
   templateUrl: './coins-table.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgClass,
     NgFor,
@@ -27,109 +26,13 @@ import { testData } from './table-data-test';
     RouterLink,
   ],
 })
-export class CoinsTableComponent implements OnInit {
-  displayedColumns!: string[];
-  globalMarketInfo: any;
-  pageNumber = 1;
+export class CoinsTableComponent {
   loadingCoins: boolean = true;
-  screenWidth!: number;
   readonly skeletonSize = { width: '100px', height: '15px' };
-  testData = testData;
 
-  constructor(private cryptoAPI: CryptoApiService, private dataSharingService: DataSharingService) {}
-
-  ngOnInit(): void {
-    this.setScreenWidth();
-    // this.fetchTop100Coins();
-    this.getGlobalMarketInfo();
-  }
-
-  setScreenWidth() {
-    this.screenWidth = window.innerWidth;
-  }
-
-  fetchTop100Coins() {
-    this.cryptoAPI
-      .get100Coins(1)
-      .pipe(
-        tap(coins => {
-          console.log('Top 100', coins);
-          this.dataSharingService.sendTop100Coins(coins.slice());
-          // this.dataSource.data = coins;
-          // this.dataSource.sort = this.sort;
-          this.loadingCoins = false;
-        })
-      )
-      .subscribe();
-  }
-
-  getGlobalMarketInfo() {
-    this.dataSharingService.globalMarketInfo.subscribe(response => (this.globalMarketInfo = response));
-  }
-
-  getDisplayedColumns() {
-    if (this.screenWidth > 800) {
-      return (this.displayedColumns = [
-        'market_cap_rank',
-        'name',
-        'current_price',
-        'price_change_percentage_24h',
-        'market_cap',
-        'total_volume',
-        'circulating_supply',
-        'sparkline7d',
-      ]);
-    } else {
-      return (this.displayedColumns = [
-        'name',
-        'current_price',
-        'price_change_percentage_24h',
-        'market_cap',
-        'total_volume',
-        'circulating_supply',
-        'sparkline7d',
-      ]);
-    }
-  }
-
-  next100() {
-    console.log('Next100 ->>>');
-    // this.dataSource.data = new Array<MarketQuote>(100);
-    this.loadingCoins = true;
-    this.cryptoAPI
-      .get100Coins(++this.pageNumber)
-      .pipe(
-        tap(coins => {
-          // this.dataSource.data = coins;
-          this.loadingCoins = false;
-        })
-      )
-      .toPromise();
-  }
-
-  back100() {
-    console.log('Back100 ->>>');
-    // this.dataSource.data = new Array<MarketQuote>(100);
-    this.loadingCoins = true;
-    this.cryptoAPI
-      .get100Coins(--this.pageNumber)
-      .pipe(
-        tap(coins => {
-          // this.dataSource.data = coins;
-          this.loadingCoins = false;
-        })
-      )
-      .toPromise();
-  }
-
-  getSmallImage(imageURL: string) {
-    return imageURL.replace('/large/', '/thumb/');
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.screenWidth = window.innerWidth;
-  }
+  // Started refactoring
+  @Input() globalCoinData!: GlobalCoinData;
+  @Input() tableCoins!: MarketQuote[];
 
   // TODO: Possible nice to have
   // sortChange() {

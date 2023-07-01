@@ -6,6 +6,7 @@ export interface MarketQuote {
   current_price: number;
   market_cap: number;
   market_cap_rank: number;
+  max_supply: number;
   total_volume: number;
   high_24h: number;
   low_24h: number;
@@ -22,6 +23,7 @@ export interface MarketQuote {
   atl_change_percentage: number;
   atl_date: string;
   roi: number;
+  sparkline_in_7d: { price: Array<number> };
   last_updated: string;
   price_change_percentage_24h_in_currency: number;
 }

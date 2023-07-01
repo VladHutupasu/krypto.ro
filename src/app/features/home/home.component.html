@@ -1,2 +1,11 @@
-<app-crypto-info-bar></app-crypto-info-bar>
-<app-coins-table></app-coins-table>
+<ng-container *ngIf="globalCoinData$ | async as globalCoinData">
+  <app-crypto-info-bar [globalCoinData]="globalCoinData"></app-crypto-info-bar>
+  <ng-container *ngIf="tableCoins$ | async as tableCoins">
+    <app-coins-table [globalCoinData]="globalCoinData" [tableCoins]="tableCoins"></app-coins-table>
+    <app-coins-table-pagination
+      [pageNumber]="pageNumber$.value"
+      (nextPage)="onNextPage()"
+      (previousPage)="onPreviousPage()"
+    ></app-coins-table-pagination>
+  </ng-container>
+</ng-container>

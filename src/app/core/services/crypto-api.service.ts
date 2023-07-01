@@ -39,7 +39,7 @@ export class CryptoApiService {
   }
 
   getGlobalInfo() {
-    return this.http.get<any>(`${this.baseUrl}/global`);
+    return this.http.get<any>(`${this.baseUrl}/global`).pipe(map(response => response.data));
   }
 
   get100Coins(pageNumber: number): Observable<MarketQuote[]> {
