@@ -6,13 +6,7 @@
       "name": "app",
       "installMode": "prefetch",
       "resources": {
-        "files": [
-          "/favicon.ico",
-          "/index.html",
-          "/manifest.webmanifest",
-          "/*.css",
-          "/*.js"
-        ]
+        "files": ["/favicon.ico", "/index.html", "/manifest.webmanifest", "/*.css", "/*.js"]
       }
     },
     {
@@ -20,10 +14,7 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": [
-          "/assets/**",
-          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
-        ]
+        "files": ["/assets/**", "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"]
       }
     }
   ],
@@ -31,10 +22,7 @@
   "dataGroups": [
     {
       "name": "api-performance",
-      "urls": [
-        "https://api.coingecko.com/api/v3/coins/list",
-        "https://api.coingecko.com/api/v3/global"
-      ],
+      "urls": ["https://api.coingecko.com/api/v3/coins/list", "https://api.coingecko.com/api/v3/global"],
       "cacheConfig": {
         "strategy": "performance",
         "maxSize": 100,
@@ -43,9 +31,7 @@
     },
     {
       "name": "api-freshness",
-      "urls": [
-        "https://api.coingecko.com/api/v3/coins/markets"
-      ],
+      "urls": ["https://api.coingecko.com/api/v3/coins/markets"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,
