@@ -43,9 +43,18 @@ export class CryptoApiService {
   }
 
   get100Coins(pageNumber: number): Observable<MarketQuote[]> {
-    return this.http.get<MarketQuote[]>(
-      `${this.baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNumber}&sparkline=true&price_change_percentage=24h`
-    );
+    return this.http
+      .get<MarketQuote[]>(
+        `${this.baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNumber}&sparkline=true&price_change_percentage=24h`
+      )
+      .pipe(
+        map(coins =>
+          coins.map(coin => {
+            coin.image = coin.image.replace('large', 'small');
+            return coin;
+          })
+        )
+      );
   }
 
   searchCoin(coin: string): Observable<CoinSearchResult[]> {

@@ -33,7 +33,7 @@
         <th class="w-0.5 sm:w-1" [ngClass]="element ? '' : 'skeleton'">{{ element?.market_cap_rank }}</th>
         <td class="cursor-pointer" [ngClass]="element ? '' : 'skeleton'">
           <div [routerLink]="['/coins', element.id]">
-            <img class="inline w-5 sm:w-6 mr-1" [src]="element?.image" />
+            <img class="inline w-5 h-5 sm:w-6 sm:h-6 mr-1" [src]="element?.image" />
             <span class="font-medium">{{ element?.name }}</span>
           </div>
         </td>
