@@ -10,7 +10,6 @@ declare let gtag: Function;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [NavbarComponent, RouterOutlet, FooterComponent],
 })

@@ -1,27 +1,42 @@
-import { CurrencyPipe, DatePipe, NgIf, NgStyle, UpperCasePipe, DecimalPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, DecimalPipe, NgClass, NgIf, NgStyle, UpperCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
 import { CryptoApiService } from '@core/services/crypto-api.service';
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexMarkers, ApexTooltip, ApexXAxis, ApexYAxis, NgApexchartsModule } from 'ng-apexcharts';
-import { tap } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexDataLabels,
+  ApexFill,
+  ApexMarkers,
+  ApexTooltip,
+  ApexXAxis,
+  ApexYAxis,
+  NgApexchartsModule,
+} from 'ng-apexcharts';
+import { tap } from 'rxjs/operators';
+import { AbsolutePipe } from '../../core/pipes/absolute-number.pipe';
+import { NumberSuffixPipe } from '../../core/pipes/number-suffix.pipe';
 
 @Component({
-    selector: 'app-coin-overview',
-    templateUrl: './coin-overview.component.html',
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgIf,
-        NgStyle,
-        NgApexchartsModule,
-        UpperCasePipe,
-        DecimalPipe,
-        CurrencyPipe,
-        TranslateModule,
-    ],
+  selector: 'app-coin-overview',
+  templateUrl: './coin-overview.component.html',
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgIf,
+    NgStyle,
+    NgApexchartsModule,
+    UpperCasePipe,
+    DecimalPipe,
+    CurrencyPipe,
+    TranslateModule,
+    NgClass,
+    NumberSuffixPipe,
+    AbsolutePipe,
+  ],
 })
 export class CoinOverviewComponent implements OnInit, OnDestroy {
   subscriptions = new SubscriptionsContainer();
@@ -59,7 +74,7 @@ export class CoinOverviewComponent implements OnInit, OnDestroy {
           this.fetchCoinInformationAndRenderChart();
         })
       )
-      .toPromise();
+      .subscribe();
   }
 
   private fetchCoinInformationAndRenderChart() {

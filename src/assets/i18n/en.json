@@ -31,12 +31,13 @@
     "top_losers": "Top losers"
   },
   "coin-overview": {
-    "coins": "Coins > ",
+    "coins": "Coins",
     "table": {
       "market_cap": "Market cap",
       "volume": "Volume 24h",
       "circulating_supply": "Circulating supply",
-      "total_supply": "Total supply"
+      "total_supply": "Total supply",
+      "sentiment": "Sentiment"
     }
   }
 }

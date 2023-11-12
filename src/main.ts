@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -36,7 +36,7 @@ bootstrapApplication(AppComponent, {
     ),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
+      enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000',
     }),
     CurrencyPipe,

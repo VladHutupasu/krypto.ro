@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CoinSearchResult } from '@core/models/coin-search-result';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { MarketQuote } from '../models/market-quote';
+import { coinData } from './mocks/coin-data';
+import { marketData } from './mocks/market-data';
 
 @Injectable({
   providedIn: 'root',
@@ -17,15 +20,21 @@ export class CryptoApiService {
   }
 
   getSingleInfoCoin(coin: string) {
-    return this.http.get<any>(
-      `${this.baseUrl}/coins/${coin}?localization=false&tickers=false&community_data=false&developer_data=false`
-    );
+    if (environment.production) {
+      return this.http.get<any>(
+        `${this.baseUrl}/coins/${coin}?localization=false&tickers=false&community_data=false&developer_data=false`
+      );
+    }
+    return of(coinData);
   }
 
   getCoinChart(coin: string, currency: string, days: string) {
-    return this.http.get<any>(
-      `${this.baseUrl}/coins/${coin}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`
-    );
+    if (environment.production) {
+      return this.http.get<any>(
+        `${this.baseUrl}/coins/${coin}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`
+      );
+    }
+    return of(marketData);
   }
 
   getMultiInfoCoin(coins: string[]): Observable<MarketQuote[]> {

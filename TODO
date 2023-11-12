@@ -4,7 +4,7 @@ Todo:
   ✔ Minimize width table columns on mobile @done(20-10-13 11:56)
   ✔ Bugs flex boxes mobile @done(20-11-09 13:20)
   ✔ Add Unsubscriber extend service @done(20-11-09 15:22)
-  ☐ Lazy load modules	
+  ☐ Lazy load modules
   ✔ Angular versioning @done(20-11-09 13:21)
   ☐ SEO (description favicon title etc.)
   ☐ Reusable components
@@ -30,4 +30,12 @@ Todo:
   ☐ Local storage language
   ☐ Find another way to fetch https://api.coingecko.com/api/v3/coins/list (lazy loaded/save it in a db or smth and update it)
   ✔ Anchor tag only on link not the whole section @done(20-11-11 10:56)
+  ✔ FIX SEARCH not clearing on focus dismissed
+  ☐ Do not load all table
+  ☐ Skeleton loaders
+  ☐ Fix theme selector
+  ☐ Extract upArrow & downArrow
+  ☐ Break down coin overview into components
+  ☐ Continue models for tokenData
+
 

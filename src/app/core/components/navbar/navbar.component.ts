@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CoinSearchResult } from '@core/models/coin-search-result';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -14,15 +14,18 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, RouterLink],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   searchUpdates$ = new Subject<string>();
   searchResults: CoinSearchResult[] = [];
   loading = false;
+  currentTheme: string;
 
-  @ViewChild('languageSelector') languageSelector!: ElementRef;
-  @ViewChild('searchBarSelector') searchBarSelector!: ElementRef;
+  destroy$ = new Subject<boolean>();
 
-  constructor(private translate: TranslateService, private cryptoAPI: CryptoApiService) {}
+  constructor(private translate: TranslateService, private cryptoAPI: CryptoApiService) {
+    const systemDarkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.currentTheme = localStorage.getItem('theme') || (systemDarkModeOn ? 'dark' : 'light');
+  }
 
   ngOnInit(): void {
     this.initializeSearch();
@@ -30,7 +33,6 @@ export class NavbarComponent implements OnInit {
 
   setLanguage(lang: string): void {
     this.translate.use(lang);
-    this.languageSelector.nativeElement.removeAttribute('open');
   }
 
   initializeSearch() {
@@ -38,16 +40,18 @@ export class NavbarComponent implements OnInit {
       .pipe(
         debounceTime(600),
         distinctUntilChanged(),
-        tap(() => (this.loading = true))
-      )
-      .subscribe(value => {
-        console.log('Searching...', value);
-        this.searchBarSelector.nativeElement.setAttribute('open', '');
-        this.cryptoAPI.searchCoin(value).subscribe(results => {
+        takeUntil(this.destroy$),
+        tap(() => (this.loading = true)),
+        switchMap(value => {
+          console.log('Searching...', value);
+          return this.cryptoAPI.searchCoin(value);
+        }),
+        tap(results => {
           this.searchResults = results.slice(0, 5);
           this.loading = false;
-        });
-      });
+        })
+      )
+      .subscribe();
   }
 
   search($searchEvent: Event) {
@@ -55,8 +59,8 @@ export class NavbarComponent implements OnInit {
     this.searchUpdates$.next(searchTerm);
   }
 
-  // @TODO Fix dropdown when clicking outside of element
-  closeDropdown() {
-    this.searchBarSelector.nativeElement.removeAttribute('open');
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
