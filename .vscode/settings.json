@@ -1,0 +1,14 @@
+{
+  "mymonorepo.enabled": true,
+  "editor.formatOnSave": true,
+  "[scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+}

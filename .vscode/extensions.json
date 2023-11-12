@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "Angular.ng-template",
+    "mikerhyssmith.ts-barrelr",
+    "kruemelkatze.vscode-dashboard",
+    "esbenp.prettier-vscode",
+    "firsttris.vscode-jest-runner",
+    "stylelint.vscode-stylelint",
+    "vscode.css-language-features"
+  ]
+}

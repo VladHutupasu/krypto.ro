@@ -13,8 +13,11 @@
       "change_24h": "24h",
       "graph_7d": "Grafic (7d)",
       "paginator": {
-        "next_100": "Următoarele 100",
-        "back_100": "Înapoi 100"
+        "next_100": "Următoarea pagină",
+        "back_100": "Pagina precedentă",
+        "next": "Următoarea",
+        "previous": "Precedenta",
+        "page": "Pagină"
       }
     },
     "stats": {
@@ -29,11 +32,12 @@
   },
   "coin-overview": {
     "coins": "Monede > ",
-    "table":{
+    "table": {
       "market_cap": "Piață capitală",
       "volume": "Volum 24h",
       "circulating_supply": "Aprovizionare",
-      "total_supply": "Aprovizionare totală"
+      "total_supply": "Aprovizionare totală",
+      "sentiment": "Sentiment"
     }
   }
 }
