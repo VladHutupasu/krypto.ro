@@ -42,7 +42,7 @@
 </section>
 
 <!-- Token symbol + Price -->
-<section *ngIf="tokenData" class="my-8 flex flex-col justify-between">
+<section *ngIf="tokenData; else loading" class="my-8 flex flex-col justify-between">
   <div class="mb-8 lg:mb-28">
     <!-- Rank -->
     <div class="flex items-center mb-4 text-sm">
@@ -124,6 +124,7 @@
     </div>
   </div>
 
+  <!-- Stat cards -->
   <div class="stats stats-vertical lg:stats-horizontal shadow">
     <!-- Market Cap -->
     <div class="stat">
@@ -237,6 +238,7 @@
       </div>
     </div>
 
+    <!-- Votes -->
     <div class="stat">
       <div class="stat-value text-2xl lg:text-4xl flex justify-evenly gap-4">
         <div>
@@ -279,169 +281,10 @@
   </div>
 </section>
 
-<!-- Token information - Market Cap, Supply etc. -->
-<!-- <section>
-  <div class="stats shadow">
-    <div class="stat">
-      <div class="stat-figure text-secondary">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-8 h-8 stroke-current"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-      </div>
-      <div class="stat-title">Downloads</div>
-      <div class="stat-value">31K</div>
-      <div class="stat-desc">Jan 1st - Feb 1st</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-figure text-secondary">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-8 h-8 stroke-current"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-          ></path>
-        </svg>
-      </div>
-      <div class="stat-title">New Users</div>
-      <div class="stat-value">4,200</div>
-      <div class="stat-desc">↗︎ 400 (22%)</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-figure text-secondary">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-8 h-8 stroke-current"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-          ></path>
-        </svg>
-      </div>
-      <div class="stat-title">New Registers</div>
-      <div class="stat-value">1,200</div>
-      <div class="stat-desc">↘︎ 90 (14%)</div>
-    </div>
-  </div>
-</section> -->
-
-<!-- Links + Info Table -->
-<!-- <section fxLayout="row" fxLayout.lt-md="column">
-    <div fxFlex.gt-sm="33">
-      <div fxHide.lt-md fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" class="mat-h4 links">
-        <div>
-          <mat-icon class="material-icons-outlined" id="rank-icon">bar_chart</mat-icon>
-          <span id="rank-number">Rank {{ tokenData?.market_cap_rank }}</span>
-        </div>
-        <div>
-          <a
-            mat-stroked-button
-            href="{{ tokenData?.links.homepage[0] }}"
-            target="_blank"
-            [disabled]="tokenData?.links.homepage.leng === 0"
-          >
-            <mat-icon class="material-icons-outlined">link</mat-icon>Website
-          </a>
-        </div>
-        <div>
-          <a
-            mat-stroked-button
-            href="{{ tokenData?.links.repos_url.github[0] }}"
-            target="_blank"
-            [disabled]="tokenData?.links.repos_url.github.leng === 0"
-          >
-            <mat-icon class="material-icons-outlined">code</mat-icon>Github
-          </a>
-        </div>
-        <div>
-          <a
-            mat-stroked-button
-            href="{{ tokenData?.links.subreddit_url }}"
-            target="_blank"
-            [disabled]="!tokenData?.links.subreddit_url"
-          >
-            <mat-icon class="material-icons-outlined">share</mat-icon>Reddit
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div fxFlex.gt-sm="63">
-      <div fxShow.lt-lg fxHide fxLayout="column" fxLayoutGap="5px">
-        <div fxLayoutGap="5px" fxLayout="row">
-          <mat-card fxFlex="calc(50% - 5px)">
-            <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-              <h2>{{ 'coin-overview.table.market_cap' | translate }}</h2>
-              <h3>
-                {{ tokenData?.market_data.market_cap.usd | currency }}
-                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize"> </ngx-skeleton-loader>
-              </h3>
-            </mat-card-content>
-          </mat-card>
-          <mat-card fxFlex="calc(50% - 5px)">
-            <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-              <h2>{{ 'coin-overview.table.volume' | translate }}</h2>
-              <h3>
-                {{ tokenData?.market_data.total_volume.usd | currency }}
-                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize"> </ngx-skeleton-loader>
-              </h3>
-            </mat-card-content>
-          </mat-card>
-        </div>
-
-        <div fxLayoutGap="5px" fxLayout="row">
-          <mat-card fxFlex="calc(50% - 5px)">
-            <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-              <h2>{{ 'coin-overview.table.circulating_supply' | translate }}</h2>
-              <h3>
-                {{ tokenData?.market_data.circulating_supply | number : '1.0-0' }}
-                {{ tokenData?.symbol | uppercase }}
-                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize"> </ngx-skeleton-loader>
-              </h3>
-            </mat-card-content>
-          </mat-card>
-          <mat-card fxFlex="calc(50% - 5px)">
-            <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-              <h2>{{ 'coin-overview.table.total_supply' | translate }}</h2>
-              <h3>
-                {{ tokenData?.market_data.total_supply | number : '1.0-0' }}
-                {{ tokenData?.symbol | uppercase }}
-                <ngx-skeleton-loader *ngIf="!tokenData" [theme]="skeletonSize"> </ngx-skeleton-loader>
-              </h3>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
-    </div>
-  </section> -->
-
 <!-- Chart -->
-<div class="card">
-  <div class="card-body p-0">
+<!-- <section *ngIf="series; else loading">
+  <div class="p-0">
     <apx-chart
-      *ngIf="series"
       [series]="series"
       [chart]="chart"
       [dataLabels]="dataLabels"
@@ -453,4 +296,14 @@
       [autoUpdateSeries]="true"
     ></apx-chart>
   </div>
-</div>
+</section> -->
+
+<section *ngIf="chartData; else loading">
+  <div #tvChart></div>
+</section>
+
+<ng-template #loading>
+  <div class="h-96 flex justify-center">
+    <span class="loading loading-ring loading-lg"></span>
+  </div>
+</ng-template>

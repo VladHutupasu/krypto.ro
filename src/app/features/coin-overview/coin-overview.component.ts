@@ -1,21 +1,12 @@
-import { CurrencyPipe, DatePipe, DecimalPipe, NgClass, NgIf, NgStyle, UpperCasePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CurrencyPipe, DecimalPipe, NgClass, NgIf, NgStyle, UpperCasePipe } from '@angular/common';
+import { Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { SubscriptionsContainer } from '@core/pipes/subscriptions-container';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexDataLabels,
-  ApexFill,
-  ApexMarkers,
-  ApexTooltip,
-  ApexXAxis,
-  ApexYAxis,
-  NgApexchartsModule,
-} from 'ng-apexcharts';
+import { ChartOptions, CrosshairMode, DeepPartial, createChart } from 'lightweight-charts';
+import { forkJoin, switchMap } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AbsolutePipe } from '../../core/pipes/absolute-number.pipe';
 import { NumberSuffixPipe } from '../../core/pipes/number-suffix.pipe';
@@ -28,7 +19,6 @@ import { NumberSuffixPipe } from '../../core/pipes/number-suffix.pipe';
     RouterLink,
     NgIf,
     NgStyle,
-    NgApexchartsModule,
     UpperCasePipe,
     DecimalPipe,
     CurrencyPipe,
@@ -38,247 +28,121 @@ import { NumberSuffixPipe } from '../../core/pipes/number-suffix.pipe';
     AbsolutePipe,
   ],
 })
-export class CoinOverviewComponent implements OnInit, OnDestroy {
-  subscriptions = new SubscriptionsContainer();
-
+export class CoinOverviewComponent implements OnInit {
   token!: string;
   tokenData: any;
-  readonly skeletonSize = { width: '100px', height: '15px' };
-
-  public series!: ApexAxisChartSeries;
-  public chart!: ApexChart;
-  public dataLabels!: ApexDataLabels;
-  public markers!: ApexMarkers;
-  public fill!: ApexFill;
-  public yaxis!: ApexYAxis;
-  public xaxis!: ApexXAxis;
-  public tooltip!: ApexTooltip;
+  chartData: any;
+  @ViewChild('tvChart', { static: false }) tvChart?: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
     private cryptoAPI: CryptoApiService,
-    private currencyPipe: CurrencyPipe,
-    private datePipe: DatePipe,
     private meta: Meta,
-    private title: Title
-  ) {
-    this.setTitleAndMeta();
-  }
+    private title: Title,
+    private destroyRef: DestroyRef
+  ) {}
 
   ngOnInit(): void {
+    const coinInfo = this.cryptoAPI.getSingleInfoCoin(this.token).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      tap(result => {
+        this.tokenData = result;
+        this.setTitleAndMeta();
+        console.log('Coin info', this.tokenData);
+      })
+    );
+
+    const coinChartInfo = this.cryptoAPI.getCoinChart(this.token, 'USD', 'max').pipe(
+      takeUntilDestroyed(this.destroyRef),
+      tap(result => {
+        this.chartData = result;
+        setTimeout(() => this.tradeViewChart(), 300);
+        console.log('Chart data', this.chartData);
+      })
+    );
+
+    const apiCalls = forkJoin({ coinInfo, coinChartInfo });
+
     this.route.paramMap
       .pipe(
-        tap(() => {
-          //@TODO fix this || ''
-          this.token = this.route.snapshot.paramMap.get('coin') || '';
-          this.fetchCoinInformationAndRenderChart();
-        })
+        takeUntilDestroyed(this.destroyRef),
+        tap(paramMap => (this.token = paramMap.get('coin')!)),
+        switchMap(() => apiCalls)
       )
       .subscribe();
   }
 
-  private fetchCoinInformationAndRenderChart() {
-    this.subscriptions.add = this.cryptoAPI.getSingleInfoCoin(this.token).subscribe(result => {
-      this.tokenData = result;
-      console.log('Coin info', this.tokenData);
-    });
-
-    this.subscriptions.add = this.cryptoAPI.getCoinChart(this.token, 'USD', 'max').subscribe(result => {
-      // this.generateChart(result);
-      this.initChartData(result);
-      console.log('Chart data', result);
-    });
-  }
-
   setTitleAndMeta() {
     this.title.setTitle('Coin chart, market cap, trading volume and more');
-    // this.meta.addTags([
-    //   { name: "description", content: tokenData.description.en },
-    // ]);
+    this.meta.addTags([{ name: 'description', content: this.tokenData.description.en }]);
   }
 
-  public initChartData(result: any): void {
-    // let ts2 = 1484418600000;
+  tradeViewChart() {
+    const options: DeepPartial<ChartOptions> = {
+      height: 450,
+      autoSize: true,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.2,
+          bottom: 0,
+        },
+      },
+      overlayPriceScales: {
+        scaleMargins: {
+          top: 0.8,
+          bottom: 0,
+        },
+      },
+      layout: {
+        background: { color: 'transparent' },
+        textColor: '#a6adba',
+        fontFamily: 'Inter',
+      },
+      grid: {
+        vertLines: {
+          color: '#a6adba00',
+        },
+        horzLines: {
+          color: '#a6adba45',
+        },
+      },
+      crosshair: {
+        mode: CrosshairMode.Normal,
+      },
+    };
+
+    const chart = createChart(this.tvChart?.nativeElement, options);
+
+    const areaSeries = chart.addAreaSeries({
+      lineColor: '#651ae6',
+      topColor: '#d927a9',
+      bottomColor: '#651ae645',
+      lineWidth: 1,
+    });
+
+    const volumeSeries = chart.addHistogramSeries({
+      color: '#27a59a70',
+      priceFormat: {
+        type: 'volume',
+      },
+      priceScaleId: '',
+    });
+
     let dates = [];
-    // for (let i = 0; i < 120; i++) {
-    //   ts2 = ts2 + 86400000;
-    //   dates.push([ts2, result]);
-    // }
-
-    for (let i = 0; i < result.prices.length; i++) {
-      dates.push([result.prices[i][0], result.prices[i][1]]);
+    for (let i = 0; i < this.chartData.prices.length; i++) {
+      dates.push({ time: (this.chartData.prices[i][0] / 1000) as any, value: this.chartData.prices[i][1] });
     }
+    areaSeries.setData(dates);
 
-    this.series = [
-      {
-        name: `${this.tokenData.name} price`,
-        data: dates,
-      },
-    ];
-    this.chart = {
-      type: 'area',
-      stacked: false,
-      height: 350,
-      zoom: {
-        type: 'x',
-        enabled: true,
-        autoScaleYaxis: true,
-      },
-      toolbar: {
-        autoSelected: 'zoom',
-        show: false,
-      },
-    };
-    this.dataLabels = {
-      enabled: false,
-    };
-    this.markers = {
-      size: 0,
-    };
-    this.fill = {
-      type: 'gradient',
-      gradient: {
-        shadeIntensity: 1,
-        inverseColors: true,
-        opacityFrom: 0.5,
-        opacityTo: 0,
-        stops: [0, 90, 100],
-      },
-    };
-    this.yaxis = {
-      labels: {
-        formatter: function (val) {
-          return val.toFixed(0);
-        },
-      },
-      title: {
-        text: 'Price',
-      },
-    };
-    this.xaxis = {
-      type: 'datetime',
-    };
-    this.tooltip = {
-      shared: false,
-      y: {
-        formatter: function (val) {
-          return `${val.toFixed(0)} $`;
-        },
-      },
-    };
-  }
-
-  generateChart(result: any) {
-    if (result.prices.length !== result.total_volumes.length) {
-      console.error('Different sizes of arrays');
-      return;
-    }
-
-    let prices = [];
     let volumes = [];
-    let lessThan1Day = [];
-    let moreThan1Day = [];
-
-    console.log('## Date', new Date(result.prices[0][0]).getDate());
-
-    for (let i = 0; i < result.prices.length; i++) {
-      if (result.prices[i][0] != result.total_volumes[i][0]) {
-        console.error('Different timestamps');
-        return;
-      }
-
-      prices.push([result.prices[i][0], result.prices[i][1]]);
-      volumes.push([
-        // Push date from prices since it should be the exact same
-        result.total_volumes[i][0],
-        result.total_volumes[i][1],
-      ]);
-
-      if (i != result.prices.length - 1) {
-        let date1 = new Date(result.prices[i][0]);
-        let date2 = new Date(result.prices[i + 1][0]);
-        let diffTime = date2.getTime() - date1.getTime();
-        if (diffTime != 86400000) {
-          diffTime < 86400000 ? lessThan1Day.push(diffTime) : moreThan1Day.push(diffTime);
-        }
-      }
+    for (let i = 0; i < this.chartData.total_volumes.length; i++) {
+      volumes.push({
+        time: (this.chartData.total_volumes[i][0] / 1000) as any,
+        value: this.chartData.total_volumes[i][1],
+      });
     }
+    volumeSeries.setData(volumes);
 
-    console.error('Found data with time diff more than 1 day - ', moreThan1Day.length);
-    console.error('Found data with time diff less than 1 day - ', lessThan1Day.length);
-
-    // this.chart = new StockChart({
-    //   rangeSelector: {
-    //     selected: 1,
-    //   },
-    //   yAxis: [
-    //     {
-    //       opposite: false,
-    //       labels: {
-    //         align: 'left',
-    //       },
-    //       height: '80%',
-    //       resize: {
-    //         enabled: true,
-    //       },
-    //     },
-    //     {
-    //       opposite: false,
-    //       labels: {
-    //         align: 'left',
-    //         enabled: false,
-    //       },
-    //       top: '80%',
-    //       height: '20%',
-    //       offset: 0,
-    //       lineWidth: 2,
-    //     },
-    //   ],
-    //   xAxis: {
-    //     type: 'datetime',
-    //   },
-    //   //TODO: not shared when trying to lookup 3m
-    //   tooltip: {
-    //     split: false,
-    //     shared: true,
-    //     followPointer: true,
-    //   },
-    //   series: [
-    //     {
-    //       type: 'line',
-    //       name: 'Price',
-    //       data: prices,
-    //       tooltip: {
-    //         valueSuffix: ' $',
-    //         valueDecimals: 2,
-    //       },
-    //     },
-    //     {
-    //       type: 'column',
-    //       name: 'Volume',
-    //       data: volumes,
-    //       yAxis: 1,
-    //       tooltip: {
-    //         valueSuffix: ' $',
-    //         valueDecimals: 0,
-    //       },
-    //     },
-    //   ],
-
-    //   credits: {
-    //     enabled: false,
-    //   },
-    //   chart: {
-    //     backgroundColor: '#f7f6f4',
-    //     height: '450px',
-    //     spacingLeft: 30,
-    //     spacingRight: 30,
-    //     zoomType: 'x',
-    //   },
-    // });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.dispose();
+    chart.timeScale().fitContent();
   }
 }
