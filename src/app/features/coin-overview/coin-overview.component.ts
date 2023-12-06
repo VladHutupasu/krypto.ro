@@ -43,12 +43,21 @@ export class CoinOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.route.paramMap
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap(paramMap => (this.token = paramMap.get('coin')!)),
+        switchMap(() => this.getAPICalls())
+      )
+      .subscribe();
+  }
+
+  getAPICalls() {
     const coinInfo = this.cryptoAPI.getSingleInfoCoin(this.token).pipe(
       takeUntilDestroyed(this.destroyRef),
       tap(result => {
         this.tokenData = result;
         this.setTitleAndMeta();
-        console.log('Coin info', this.tokenData);
       })
     );
 
@@ -60,16 +69,7 @@ export class CoinOverviewComponent implements OnInit {
         console.log('Chart data', this.chartData);
       })
     );
-
-    const apiCalls = forkJoin({ coinInfo, coinChartInfo });
-
-    this.route.paramMap
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(paramMap => (this.token = paramMap.get('coin')!)),
-        switchMap(() => apiCalls)
-      )
-      .subscribe();
+    return forkJoin({ coinInfo, coinChartInfo });
   }
 
   setTitleAndMeta() {
