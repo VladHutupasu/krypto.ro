@@ -5,7 +5,7 @@ import { MarketQuote } from '@core/models/market-quote';
 import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { BehaviorSubject, Observable, combineLatest, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, switchMap, tap } from 'rxjs';
 import { CoinsTablePaginationComponent } from './components/coins-table-pagination/coins-table-pagination.component';
 import { CoinsTableComponent } from './components/coins-table/coins-table.component';
 import { CryptoInfoBarComponent } from './components/crypto-info-bar/crypto-info-bar.component';
@@ -37,7 +37,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   getApiCalls() {
-    const tableCoins: Observable<MarketQuote[]> = this.pageNumber$.pipe(
+    const tableCoins: Observable<MarketQuote[] | undefined> = this.pageNumber$.pipe(
+      tap(() => {
+        if (this.data) {
+          this.data()!.tableCoins = undefined;
+        }
+      }),
       switchMap(pageNumber => this.cryptoAPI.get100Coins(pageNumber))
     );
     const globalCoinData: Observable<GlobalCoinData> = this.cryptoAPI.getGlobalInfo();
