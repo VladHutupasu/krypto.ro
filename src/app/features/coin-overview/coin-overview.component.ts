@@ -31,26 +31,17 @@ import { chartOptions } from './chart-options';
 })
 export class CoinOverviewComponent {
   token!: string;
-  // errors: {
-  //   coinInfo: boolean;
-  //   coinChartInfo: boolean;
-  // } = {
-  //   coinInfo: false,
-  //   coinChartInfo: false,
-  // };
   isLoading = signal(true);
 
   tokenData = computed(() => {
     const data = this.data()?.coinInfo;
-    console.log('what', data);
-    // if (!data) return null;
+    if (!data) return;
     this.setTitleAndMeta(data?.description?.en);
     return data;
   });
 
   chartData = computed(() => {
     const data = this.data()?.coinChartInfo;
-    console.log('Computed chart data', data);
     if (!data) return;
     setTimeout(() => this.tradeViewChart(), 400);
     return data;
@@ -78,14 +69,12 @@ export class CoinOverviewComponent {
   getAPICalls() {
     const coinInfo = this.cryptoAPI.getSingleInfoCoin(this.token).pipe(
       catchError(error => {
-        // this.errors.coinInfo = true;
         console.error('Error fetching coin data', error);
         return of(null);
       })
     );
     const coinChartInfo = this.cryptoAPI.getCoinChart(this.token, 'USD', '365').pipe(
       catchError(error => {
-        // this.errors.coinChartInfo = true;
         console.error('Error fetching chart data', error);
         return of(null);
       })

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CoinSearchResult } from '@core/models/coin-search-result';
-import { Observable, delay, map, of, throwError } from 'rxjs';
+import { Observable, delay, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MarketQuote } from '../models/market-quote';
+import { coinData } from './mocks/coin-data';
 import { marketData } from './mocks/market-data';
 
 @Injectable({
@@ -24,8 +25,8 @@ export class CryptoApiService {
         `${this.baseUrl}/coins/${coin}?localization=false&tickers=false&community_data=false&developer_data=false`
       );
     }
-    return throwError(() => 'Error');
-    // return of(coinData).pipe(delay(6000));
+    // return throwError(() => 'Error');
+    return of(coinData).pipe(delay(6000));
   }
 
   getCoinChart(coin: string, currency: string, days: string) {
