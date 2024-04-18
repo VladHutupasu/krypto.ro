@@ -47,6 +47,6 @@ Thumbs.db
 debug.log
 
 # Firebase
-/.firebase
+.firebase
 .angular/cache
 firebase-debug.log
