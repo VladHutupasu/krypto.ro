@@ -42,7 +42,7 @@
 </section>
 
 <!-- Token symbol + Price -->
-<section *ngIf="!isLoading(); else loading" class="my-8 flex flex-col justify-between">
+<section *ngIf="!isLoading(); else loadingCoinInfo" class="my-8 flex flex-col justify-between">
   <div *ngIf="tokenData(); else somethingWentWrong">
     <div class="mb-8 lg:mb-28">
       <!-- Rank -->
@@ -126,7 +126,7 @@
     </div>
 
     <!-- Stat cards -->
-    <div class="stats stats-vertical lg:stats-horizontal shadow">
+    <div class="stats stats-vertical w-full lg:stats-horizontal shadow">
       <!-- Market Cap -->
       <div class="stat">
         <div class="stat-figure text-secondary">
@@ -285,7 +285,7 @@
   </div>
 </section>
 
-<section *ngIf="!isLoading(); else loading">
+<section *ngIf="!isLoading(); else loadingChart">
   <div *ngIf="chartData(); else somethingWentWrong">
     <div #tvChart></div>
   </div>
@@ -297,8 +297,23 @@
   </div>
 </ng-template>
 
-<ng-template #loading>
-  <div class="h-72 flex justify-center">
-    <span class="loading loading-ring loading-lg"></span>
+<ng-template #loadingCoinInfo>
+  <div class="flex flex-col gap-4 w-full my-8">
+    <div class="skeleton h-4 w-28"></div>
+    <div class="flex gap-1 items-center">
+      <div class="skeleton w-8 h-8 rounded-full shrink-0"></div>
+      <div class="skeleton h-4 w-28"></div>
+    </div>
+    <div class="skeleton h-16 w-80"></div>
+    <div class="flex flex-col lg:flex-row gap-1 mt-8 lg:mt-28">
+      <div class="skeleton h-20 lg:h-32 lg:flex-1"></div>
+      <div class="skeleton h-20 lg:h-32 lg:flex-1"></div>
+      <div class="skeleton h-20 lg:h-32 lg:flex-1"></div>
+      <div class="skeleton h-20 lg:h-32 lg:flex-1"></div>
+    </div>
   </div>
+</ng-template>
+
+<ng-template #loadingChart>
+  <div class="skeleton h-96"></div>
 </ng-template>

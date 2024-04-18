@@ -43,7 +43,7 @@ export class CoinOverviewComponent {
   chartData = computed(() => {
     const data = this.data()?.coinChartInfo;
     if (!data) return;
-    setTimeout(() => this.tradeViewChart(), 400);
+    setTimeout(() => this.tradeViewChart(), 10);
     return data;
   });
 
