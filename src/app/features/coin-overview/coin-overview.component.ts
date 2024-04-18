@@ -1,15 +1,16 @@
 import { CurrencyPipe, DecimalPipe, NgClass, NgIf, NgStyle, UpperCasePipe } from '@angular/common';
-import { Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, ElementRef, ViewChild, computed, signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CryptoApiService } from '@core/services/crypto-api.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { ChartOptions, CrosshairMode, DeepPartial, createChart } from 'lightweight-charts';
-import { forkJoin, switchMap } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { createChart } from 'lightweight-charts';
+import { combineLatest, of, switchMap } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { AbsolutePipe } from '../../core/pipes/absolute-number.pipe';
 import { NumberSuffixPipe } from '../../core/pipes/number-suffix.pipe';
+import { chartOptions } from './chart-options';
 
 @Component({
   selector: 'app-coin-overview',
@@ -28,11 +29,43 @@ import { NumberSuffixPipe } from '../../core/pipes/number-suffix.pipe';
     AbsolutePipe,
   ],
 })
-export class CoinOverviewComponent implements OnInit {
+export class CoinOverviewComponent {
   token!: string;
-  tokenData: any;
-  chartData: any;
+  // errors: {
+  //   coinInfo: boolean;
+  //   coinChartInfo: boolean;
+  // } = {
+  //   coinInfo: false,
+  //   coinChartInfo: false,
+  // };
+  isLoading = signal(true);
+
+  tokenData = computed(() => {
+    const data = this.data()?.coinInfo;
+    console.log('what', data);
+    // if (!data) return null;
+    this.setTitleAndMeta(data?.description?.en);
+    return data;
+  });
+
+  chartData = computed(() => {
+    const data = this.data()?.coinChartInfo;
+    console.log('Computed chart data', data);
+    if (!data) return;
+    setTimeout(() => this.tradeViewChart(), 400);
+    return data;
+  });
+
   @ViewChild('tvChart', { static: false }) tvChart?: ElementRef;
+
+  data = toSignal(
+    this.route.paramMap.pipe(
+      takeUntilDestroyed(this.destroyRef),
+      tap(paramMap => (this.token = paramMap.get('coin')!)),
+      switchMap(() => this.getAPICalls()),
+      tap(() => this.isLoading.set(false))
+    )
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -42,76 +75,33 @@ export class CoinOverviewComponent implements OnInit {
     private destroyRef: DestroyRef
   ) {}
 
-  ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(paramMap => (this.token = paramMap.get('coin')!)),
-        switchMap(() => this.getAPICalls())
-      )
-      .subscribe();
-  }
-
   getAPICalls() {
     const coinInfo = this.cryptoAPI.getSingleInfoCoin(this.token).pipe(
-      takeUntilDestroyed(this.destroyRef),
-      tap(result => {
-        this.tokenData = result;
-        this.setTitleAndMeta();
+      catchError(error => {
+        // this.errors.coinInfo = true;
+        console.error('Error fetching coin data', error);
+        return of(null);
       })
     );
-
-    const coinChartInfo = this.cryptoAPI.getCoinChart(this.token, 'USD', 'max').pipe(
-      takeUntilDestroyed(this.destroyRef),
-      tap(result => {
-        this.chartData = result;
-        setTimeout(() => this.tradeViewChart(), 300);
-        console.log('Chart data', this.chartData);
+    const coinChartInfo = this.cryptoAPI.getCoinChart(this.token, 'USD', '365').pipe(
+      catchError(error => {
+        // this.errors.coinChartInfo = true;
+        console.error('Error fetching chart data', error);
+        return of(null);
       })
     );
-    return forkJoin({ coinInfo, coinChartInfo });
+    return combineLatest({ coinInfo, coinChartInfo });
   }
 
-  setTitleAndMeta() {
+  setTitleAndMeta(description: string) {
     this.title.setTitle('Coin chart, market cap, trading volume and more');
-    this.meta.addTags([{ name: 'description', content: this.tokenData.description.en }]);
+    this.meta.addTags([{ name: 'description', content: description }]);
   }
 
   tradeViewChart() {
-    const options: DeepPartial<ChartOptions> = {
-      height: 450,
-      autoSize: true,
-      rightPriceScale: {
-        scaleMargins: {
-          top: 0.2,
-          bottom: 0,
-        },
-      },
-      overlayPriceScales: {
-        scaleMargins: {
-          top: 0.8,
-          bottom: 0,
-        },
-      },
-      layout: {
-        background: { color: 'transparent' },
-        textColor: '#a6adba',
-        fontFamily: 'Inter',
-      },
-      grid: {
-        vertLines: {
-          color: '#a6adba00',
-        },
-        horzLines: {
-          color: '#a6adba45',
-        },
-      },
-      crosshair: {
-        mode: CrosshairMode.Normal,
-      },
-    };
-
-    const chart = createChart(this.tvChart?.nativeElement, options);
+    console.log('[dev] Rendering chart data');
+    if (!this.chartData() || !this.chartData()?.prices) return;
+    const chart = createChart(this.tvChart?.nativeElement, chartOptions);
 
     const areaSeries = chart.addAreaSeries({
       lineColor: '#651ae6',
@@ -129,16 +119,16 @@ export class CoinOverviewComponent implements OnInit {
     });
 
     let dates = [];
-    for (let i = 0; i < this.chartData.prices.length; i++) {
-      dates.push({ time: (this.chartData.prices[i][0] / 1000) as any, value: this.chartData.prices[i][1] });
+    for (let i = 0; i < this.chartData()!.prices.length; i++) {
+      dates.push({ time: (this.chartData()!.prices[i][0] / 1000) as any, value: this.chartData().prices[i][1] });
     }
     areaSeries.setData(dates);
 
     let volumes = [];
-    for (let i = 0; i < this.chartData.total_volumes.length; i++) {
+    for (let i = 0; i < this.chartData().total_volumes.length; i++) {
       volumes.push({
-        time: (this.chartData.total_volumes[i][0] / 1000) as any,
-        value: this.chartData.total_volumes[i][1],
+        time: (this.chartData().total_volumes[i][0] / 1000) as any,
+        value: this.chartData().total_volumes[i][1],
       });
     }
     volumeSeries.setData(volumes);

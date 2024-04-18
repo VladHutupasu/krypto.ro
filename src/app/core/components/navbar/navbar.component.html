@@ -11,7 +11,7 @@
           type="text"
           placeholder="Search"
           class="input input-sm w-32 sm:input-md sm:w-auto input-bordered"
-          (input)="search($event)"
+          [formControl]="searchInput"
         />
       </label>
       <ul
@@ -19,7 +19,7 @@
         class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-2"
         #searchBarSelector
       >
-        <ng-container *ngIf="searchResults.length > 0 && !loading; then results; else noResults"></ng-container>
+        <ng-container *ngIf="searchResults.length > 0 && !loading(); then results; else noResults"></ng-container>
 
         <ng-template #results>
           <li *ngFor="let result of searchResults">
@@ -30,8 +30,8 @@
           </li>
         </ng-template>
         <ng-template #noResults>
-          <li *ngIf="!loading" class="text-center p-2">No results!</li>
-          <li *ngIf="loading" class="flex items-center p-2">
+          <li *ngIf="!loading()" class="text-center p-2">No results!</li>
+          <li *ngIf="loading()" class="flex items-center p-2">
             <span class="loading loading-spinner loading-xs text-primary"></span>
           </li>
         </ng-template>
