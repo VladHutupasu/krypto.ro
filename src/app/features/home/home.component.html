@@ -1,11 +1,50 @@
-<ng-container *ngIf="globalCoinData$ | async as globalCoinData">
+<!-- Coins stats -->
+<ng-container *ngIf="data()?.globalCoinData as globalCoinData; else loadingCoinData">
   <app-crypto-info-bar [globalCoinData]="globalCoinData"></app-crypto-info-bar>
-  <ng-container *ngIf="tableCoins$ | async as tableCoins">
-    <app-coins-table [globalCoinData]="globalCoinData" [tableCoins]="tableCoins"></app-coins-table>
-    <app-coins-table-pagination
-      [pageNumber]="pageNumber$.value"
-      (nextPage)="onNextPage()"
-      (previousPage)="onPreviousPage()"
-    ></app-coins-table-pagination>
-  </ng-container>
 </ng-container>
+
+<!-- Coins intro text -->
+<section *ngIf="data()?.globalCoinData as globalCoinData; else loadingIntroText" class="pb-10">
+  <h1 class="font-bold text-lg sm:text-2xl text-justify">{{ 'home.title' | translate }}</h1>
+  <h3 class="font-semibold text-base sm:text-xl text-gray-500">
+    {{
+      'home.subtitle'
+        | translate
+          : {
+              total_market_cap: (globalCoinData.total_market_cap.usd | numberSuffix : 2),
+              market_cap_change_percentage_24h: (globalCoinData.market_cap_change_percentage_24h_usd | number : '1.2-2')
+            }
+    }}
+  </h3>
+</section>
+
+<!-- Coin Table -->
+<ng-container *ngIf="data()?.tableCoins as tableCoins; else loadingTableCoins">
+  <app-coins-table [tableCoins]="tableCoins"></app-coins-table>
+
+  <app-coins-table-pagination
+    [pageNumber]="pageNumber$.value"
+    (nextPage)="onNextPage()"
+    (previousPage)="onPreviousPage()"
+  ></app-coins-table-pagination>
+</ng-container>
+
+<!-- Loaders -->
+<ng-template #loadingCoinData>
+  <div class="flex flex-col md:flex-row gap-1 my-12">
+    <div class="skeleton h-20 md:h-24 md:flex-1"></div>
+    <div class="skeleton h-20 md:h-24 md:flex-1"></div>
+    <div class="skeleton h-20 md:h-24 md:flex-1"></div>
+  </div>
+</ng-template>
+
+<ng-template #loadingIntroText>
+  <div class="flex flex-col gap-1 pb-10">
+    <div class="skeleton h-10 w-1/3"></div>
+    <div class="skeleton h-8 w-4/6"></div>
+  </div>
+</ng-template>
+
+<ng-template #loadingTableCoins>
+  <div class="skeleton flex flex-col h-screen"></div>
+</ng-template>

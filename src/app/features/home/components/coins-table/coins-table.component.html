@@ -1,17 +1,3 @@
-<section class="pb-10">
-  <h1 class="font-bold text-lg sm:text-2xl text-justify">{{ 'home.title' | translate }}</h1>
-  <h3 class="font-semibold text-base sm:text-xl text-gray-500" [ngClass]="globalCoinData ? '' : 'skeleton'">
-    {{
-      'home.subtitle'
-        | translate
-          : {
-              total_market_cap: (globalCoinData.total_market_cap.usd | numberSuffix : 2),
-              market_cap_change_percentage_24h: (globalCoinData.market_cap_change_percentage_24h_usd | number : '1.2-2')
-            }
-    }}
-  </h3>
-</section>
-
 <!-- TABLE -->
 <div class="overflow-x-auto">
   <table class="table table-sm sm:table-md">
@@ -30,8 +16,8 @@
 
     <tbody>
       <tr *ngFor="let element of tableCoins">
-        <th class="w-0.5 sm:w-1" [ngClass]="element ? '' : 'skeleton'">{{ element?.market_cap_rank }}</th>
-        <td class="cursor-pointer" [ngClass]="element ? '' : 'skeleton'">
+        <th class="w-0.5 sm:w-1">{{ element?.market_cap_rank }}</th>
+        <td class="cursor-pointer">
           <div [routerLink]="['/coins', element.id]">
             <img class="inline w-5 h-5 sm:w-6 sm:h-6 mr-1" [src]="element?.image" />
             <span class="font-medium">{{ element?.name }}</span>

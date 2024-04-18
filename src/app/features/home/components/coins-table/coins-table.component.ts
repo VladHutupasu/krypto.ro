@@ -6,7 +6,6 @@ import { AbsolutePipe } from '@core/pipes/absolute-number.pipe';
 import { NumberSuffixPipe } from '@core/pipes/number-suffix.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { TrendModule } from 'ngx-trend';
-import { GlobalCoinData } from '../../models/global-coin-data.model';
 
 @Component({
   selector: 'app-coins-table',
@@ -27,11 +26,6 @@ import { GlobalCoinData } from '../../models/global-coin-data.model';
   ],
 })
 export class CoinsTableComponent {
-  loadingCoins: boolean = true;
-  readonly skeletonSize = { width: '100px', height: '15px' };
-
-  // Started refactoring
-  @Input() globalCoinData!: GlobalCoinData;
   @Input() tableCoins!: MarketQuote[];
 
   // TODO: Possible nice to have

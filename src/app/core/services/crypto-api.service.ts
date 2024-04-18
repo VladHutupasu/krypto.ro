@@ -5,7 +5,9 @@ import { Observable, delay, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MarketQuote } from '../models/market-quote';
 import { coinData } from './mocks/coin-data';
+import { globalData } from './mocks/global-data';
 import { marketData } from './mocks/market-data';
+import { marketsData } from './mocks/markets-data';
 
 @Injectable({
   providedIn: 'root',
@@ -53,24 +55,38 @@ export class CryptoApiService {
   }
 
   getGlobalInfo() {
-    return this.http
-      .get<any>(`${this.baseUrl}/global?x_cg_demo_api_key=${this.API_KEY}`)
-      .pipe(map(response => response.data));
+    if (environment.production) {
+      return this.http
+        .get<any>(`${this.baseUrl}/global?x_cg_demo_api_key=${this.API_KEY}`)
+        .pipe(map(response => response.data));
+    }
+    return of(globalData).pipe(delay(2000));
   }
 
   get100Coins(pageNumber: number): Observable<MarketQuote[]> {
-    return this.http
-      .get<MarketQuote[]>(
-        `${this.baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNumber}&sparkline=true&price_change_percentage=24h&x_cg_demo_api_key=${this.API_KEY}`
-      )
-      .pipe(
-        map(coins =>
-          coins.map(coin => {
-            coin.image = coin.image.replace('large', 'small');
-            return coin;
-          })
+    if (environment.production) {
+      return this.http
+        .get<MarketQuote[]>(
+          `${this.baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNumber}&sparkline=true&price_change_percentage=24h&x_cg_demo_api_key=${this.API_KEY}`
         )
-      );
+        .pipe(
+          map(coins =>
+            coins.map(coin => {
+              coin.image = coin.image.replace('large', 'small');
+              return coin;
+            })
+          )
+        );
+    }
+    return of(marketsData).pipe(
+      delay(2000),
+      map(coins =>
+        coins.map(coin => {
+          coin.image = coin.image.replace('large', 'small');
+          return coin;
+        })
+      )
+    );
   }
 
   searchCoin(coin: string): Observable<CoinSearchResult[]> {
